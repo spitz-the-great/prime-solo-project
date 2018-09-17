@@ -17,7 +17,7 @@ import './styles/main.css';
 
 const App = () => (
   <div>
-    <Header title="Multiplayer Chat App" />
+    {/* <Header title="Multiplayer Chat App" /> */}
     <Router>
       <Switch>
         <Redirect exact from="/" to="/home" />

@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import Header from '../Header/Header.js';
 
 import Nav from '../../components/Nav/Nav';
 
@@ -46,6 +47,7 @@ class ProfilePage extends Component {
 
         return (
             <div>
+                <Header title="Multiplayer Chat App" />
                 <Nav  />
                 {content}
             </div>
