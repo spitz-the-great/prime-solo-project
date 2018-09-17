@@ -9,14 +9,19 @@ import { USER_ACTIONS } from '../../redux/actions/userActions';
 
 const mapStateToProps = state => ({
     user: state.user,
+    profile: state.profileReducer
 });
 
 class ProfilePage extends Component {
 
-
+    getProfile() {
+        this.props.dispatch({type:'FETCH_PROFILE'});
+    }
 
     componentDidMount() {
         this.props.dispatch({ type: USER_ACTIONS.FETCH_USER });
+        this.getProfile();
+
     }
 
     componentDidUpdate() {
@@ -27,7 +32,7 @@ class ProfilePage extends Component {
 
     render() {
         // let location =  this.props.location;
-        let location =  window.location.href;
+        let location = window.location.href;
         let passUrl = location.substr(24, 7);
 
         let content = null;
@@ -39,8 +44,9 @@ class ProfilePage extends Component {
                     <p>
                         Manage Profile
               </p>
-              <p>{passUrl}</p>
-              
+                    <p>{passUrl}</p>
+                    <p>{JSON.stringify(this.props.profile)}</p>
+
                 </div>
             );
         }
@@ -48,13 +54,13 @@ class ProfilePage extends Component {
         return (
             <div>
                 <Header title="Multiplayer Chat App" />
-                <Nav  />
+                <Nav />
                 {content}
             </div>
         );
     }
-}    
+}
 
-  
+
 
 export default connect(mapStateToProps)(ProfilePage);

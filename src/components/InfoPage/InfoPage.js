@@ -4,6 +4,8 @@ import { connect } from 'react-redux';
 import Nav from '../../components/Nav/Nav';
 import { USER_ACTIONS } from '../../redux/actions/userActions';
 
+import './InfoPage.css';
+
 const mapStateToProps = state => ({
   user: state.user,
 });
@@ -28,6 +30,13 @@ class InfoPage extends Component {
           <p>
             Chat Page
           </p>
+          <ul className="others">Others Online:
+            <br/>
+            <li>user1</li>
+            <li>user2</li>
+          </ul>
+
+          <div className="chat">General Chat</div>
         </div>
       );
     }

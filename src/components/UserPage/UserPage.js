@@ -33,20 +33,32 @@ class UserPage extends Component {
   render() {
     let content = null;
 
+    let dummyUsers = ["user1", "user2"];
+
     if (this.props.user.userName) {
       content = (
         <div>
           <h1
             id="welcome"
           >
-            Welcome, { this.props.user.userName }!
+            Welcome, {this.props.user.userName}!
           </h1>
           <p>Your ID is: {this.props.user.id}</p>
 
           <button onClick={this.enterChatPage}>
             Join Main Chat
           </button>
+          <ul>Others Online:
+            <br />
+            
 
+            <li>user1
+ 
+            </li>
+            <li>user2
+
+           </li>
+          </ul>
 
           <button
             onClick={this.logout}
@@ -61,7 +73,7 @@ class UserPage extends Component {
       <div>
         <Header title="Multiplayer Chat App" />
         <Nav />
-        { content }
+        {content}
       </div>
     );
   }
