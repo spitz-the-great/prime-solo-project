@@ -5,7 +5,6 @@ CREATE TABLE person (
 );
 
 
-
 CREATE TABLE "user_profile" (
 	"profile_id" serial NOT NULL,
 	"privacy_setting" varchar(24) NOT NULL,
@@ -16,7 +15,6 @@ CREATE TABLE "user_profile" (
 );
 
 
-
 CREATE TABLE "friends" (
 	"friends_id" serial NOT NULL,
 	"user1_id" integer NOT NULL,
@@ -25,7 +23,6 @@ CREATE TABLE "friends" (
 ) WITH (
   OIDS=FALSE
 );
-
 
 
 CREATE TABLE "friend_requests" (
@@ -39,8 +36,6 @@ CREATE TABLE "friend_requests" (
 ) WITH (
   OIDS=FALSE
 );
-
-
 
 
 ALTER TABLE "user_profile" ADD CONSTRAINT "user_profile_fk0" FOREIGN KEY ("user_id") REFERENCES "person"("id");
