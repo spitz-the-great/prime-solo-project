@@ -59,12 +59,19 @@ class ProfilePage extends Component {
             this.props.history.push('home');
         }
     }
+    
     handleChange = (event) => {
         this.setState({
             ...this.state,
             [event.target.name]: event.target.value
         })
     }
+
+
+    setPrivate = () =>{
+
+    }
+
 
     render() {
         // let location =  this.props.location;
@@ -81,7 +88,7 @@ class ProfilePage extends Component {
                     <p>{JSON.stringify(this.props.profile)}</p>
                     <br/>
                     <br/>
-                    <p>{this.props.profileReducer.privacy_setting}</p>
+                    {/* <p>{this.props.profileReducer[0].privacy_setting}</p> */}
                     <br/>
                     <button onClick={this.setPrivate}>Set To Private</button>
                     <button onClick={this.setPublic}>Set To Public</button>

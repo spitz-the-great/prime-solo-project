@@ -1,8 +1,31 @@
 
 const express = require('express');
 require('dotenv').config();
-
 const app = express();
+// start io config
+// const io = require('socket.io'); << not working
+// const io = require('socket.io')(app);
+
+// App Set //
+const PORT = process.env.PORT || 5000;
+var server = require('http').createServer(app);
+var io = require('socket.io')(server);
+
+io.on('connection', (client) => {
+  
+});
+//end io config
+
+
+
+
+// var server = require('http').createServer(app)
+// var io = require('socket.io')(server)
+
+server.listen(PORT);
+
+
+
 const bodyParser = require('body-parser');
 const sessionMiddleware = require('./modules/session-middleware');
 
@@ -31,9 +54,9 @@ app.use('/person', personRouter);
 app.use(express.static('build'));
 
 // App Set //
-const PORT = process.env.PORT || 5000;
+// const PORT = process.env.PORT || 5000;
 
 /** Listen * */
-app.listen(PORT, () => {
-  console.log(`Listening on port: ${PORT}`);
-});
+// app.listen(PORT, () => {
+//   console.log(`Listening on port: ${PORT}`);
+// });
