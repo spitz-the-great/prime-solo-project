@@ -13,9 +13,12 @@ import UserPage from './components/UserPage/UserPage';
 import InfoPage from './components/InfoPage/InfoPage';
 import ProfilePage from './components/ProfilePage/ProfilePage.js';
 
+
+
 import './styles/main.css';
 
 const App = () => (
+  
   <div>
     {/* <Header title="Multiplayer Chat App" /> */}
     <Router>
