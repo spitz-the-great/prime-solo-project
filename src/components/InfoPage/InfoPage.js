@@ -8,7 +8,7 @@ import './InfoPage.css';
 
 // socket.io
 import socketIOClient from 'socket.io-client';
-
+const socket = socketIOClient('http://localhost:5000', { transports: ['websocket'] });
 const mapStateToProps = state => ({
   user: state.user,
 });
@@ -17,17 +17,16 @@ class InfoPage extends Component {
   constructor() {
     super()
     this.state = {
-      // endpoint: "http://localhost:3000",
-      // this is where we are connecting to with sockets
-
+      
       color: 'white',
+      newMessage: '',
+      messagesList: [],
 
     }
   }
 
   // method for emitting a socket.io event
   send = () => {
-    const socket = socketIOClient('http://localhost:5000',  {transports:['websocket']});
     socket.emit('change color', this.state.color) // change 'red' to this.state.color
 
     // this emits an event to the socket (your server) with an argument of 'red'
@@ -44,7 +43,7 @@ class InfoPage extends Component {
   componentDidMount() {
     this.props.dispatch({ type: USER_ACTIONS.FETCH_USER });
     socketIOClient({ path: '/socket', transports: ['websocket'] });
-    socketIOClient.connect('http://localhost:5000',  {transports:['websocket']});
+    socketIOClient.connect('http://localhost:5000', { transports: ['websocket'] });
   }
 
   componentDidUpdate() {
@@ -53,14 +52,45 @@ class InfoPage extends Component {
     }
   }
 
+  newMessageClick = (event) => {
+    event.preventDefault();
+    // const socket = socketIOClient('http://localhost:5000', { transports: ['websocket'] });
+    socket.emit('new message', this.state.newMessage);
+    console.log(this.state.newMessage);
+  }
+
+  updateMessageList = () => {
+    // const socket = socketIOClient('http://localhost:5000', { transports: ['websocket'] });
+    socket.on('update messages', (data) => {
+      console.log('from server: ', data);
+      this.setState({
+        ...this.state, messagesList: data
+      })
+    });
+  }
+
+  changeHandler = (event) => {
+    this.setState({
+      ...this.state,
+      [event.target.name]: event.target.value,
+    })
+  }
+
   render() {
     let content = null;
 
-    const socket = socketIOClient('http://localhost:5000',  {transports:['websocket']});
+    // const socket = socketIOClient('http://localhost:5000', { transports: ['websocket'] });
     // setting the color of our button
     socket.on('change color', (col) => {
       document.body.style.backgroundColor = col
-    })
+    });
+
+    socket.on('update messages', (data) => {
+      console.log('from server: ', data);
+      this.setState({
+        ...this.state.messagesList, messagesList: data
+      })
+    });
 
     // socket.on is another method that checks for incoming events from the server
     // This method is looking for the event 'change color'
@@ -87,9 +117,20 @@ class InfoPage extends Component {
             <button onClick={() => this.send()}>Change Color</button>
             <button id="red" onClick={() => this.setColor('red')}>Red</button>
             <button id="blue" onClick={() => this.setColor('blue')}>Blue</button>
-            
+          </div>
+          <form onSubmit={this.newMessageClick}>
+            <input
+              onChange={this.changeHandler}
+              value={this.state.newMessage}
+              type="text" name="newMessage">
+            </input>
+            <button type="submit" >Send Message</button>
+          </form>
+          <div>{this.state.messagesList}
+
 
           </div>
+
         </div>
       );
     }
