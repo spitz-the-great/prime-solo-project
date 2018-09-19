@@ -1,13 +1,34 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
 
-// logout = () => {
-//   this.props.dispatch(triggerLogout());
-// }
-// const location = this.props.location;
+import { USER_ACTIONS } from '../../redux/actions/userActions';
+import { triggerLogout } from '../../redux/actions/loginActions';
 
-const Nav = () => (
 
+const mapStateToProps = state => ({
+  user: state.user,
+});
+
+
+class Nav extends Component{
+
+  componentDidMount() {
+    this.props.dispatch({ type: USER_ACTIONS.FETCH_USER });
+  }
+
+  componentDidUpdate() {
+    if (!this.props.user.isLoading && this.props.user.userName === null) {
+      this.props.history.push('home');
+    }
+  }
+  logout = () => {
+    this.props.dispatch(triggerLogout());
+  }
+
+// const Nav = () => (
+  render(){
+return(
   <div className="navbar">
     <div>
       <ul>
@@ -29,13 +50,19 @@ const Nav = () => (
         {/* need to figure out how to keep user on same page
         alert confirm box, then log out - onClick */}
         <li>
-        <Link to="/">
+        <p className="logout"
+        onClick={this.logout}>
             Log Out
-          </Link>
+          </p>
           </li>
       </ul>
     </div>
   </div>
-);
+);  // end return
 
-export default Nav;
+  } // end render
+
+
+}
+
+export default connect(mapStateToProps)(Nav);

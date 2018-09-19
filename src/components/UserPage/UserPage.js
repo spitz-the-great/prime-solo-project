@@ -82,7 +82,7 @@ class UserPage extends Component {
     return (
       <div>
         <Header title="Multiplayer Chat App" />
-        <Nav />
+        <Nav history={this.props.history}/>
         {content}
       </div>
     );

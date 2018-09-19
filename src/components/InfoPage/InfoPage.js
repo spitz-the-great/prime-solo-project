@@ -62,7 +62,6 @@ class InfoPage extends Component {
       user: this.props.user.userName
     }
   
-    
     // const socket = socketIOClient('http://localhost:5000', { transports: ['websocket'] });
     socket.emit('new message', {
       user: this.props.user.userName,
@@ -128,8 +127,6 @@ class InfoPage extends Component {
             )
 
           })}
-           
-
 
           </div>
 
