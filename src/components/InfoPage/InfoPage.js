@@ -17,10 +17,10 @@ class InfoPage extends Component {
   constructor() {
     super()
     this.state = {
-
+      
       color: 'white',
       newMessage: '',
-      messagesList: [],
+      messagesList: []
 
     }
 
@@ -57,20 +57,25 @@ class InfoPage extends Component {
 
   newMessageClick = (event) => {
     event.preventDefault();
+    let data = {
+      message: this.state.newMessage,
+      user: this.props.user.userName
+    }
+  
+    
     // const socket = socketIOClient('http://localhost:5000', { transports: ['websocket'] });
-    socket.emit('new message', this.state.newMessage);
-    console.log(this.state.newMessage);
+    socket.emit('new message', {
+      user: this.props.user.userName,
+      message: this.state.newMessage
+    });
+    console.log(data);
   }
 
   updateMessageList = (data) => {
     // const socket = socketIOClient('http://localhost:5000', { transports: ['websocket'] });
     // socket.on('update messages', (data) => {
       console.log('from server: ', data);
-      const messagesList = this.state.messagesList;
-      messagesList.push(data);
-      this.setState({
-        messagesList
-      })
+      this.setState({messagesList: [...this.state.messagesList, data]});
     // });
   }
 
@@ -81,7 +86,6 @@ class InfoPage extends Component {
     })
   }
 
-  
   render() {
     let content = null;
 
@@ -113,17 +117,17 @@ class InfoPage extends Component {
             <button type="submit" >Send Message</button>
           </form>
           <div>
-            {this.state.messagesList}
-            
-          {/* {this.state.messagesList.map((message, i) =>{
+            {/* {this.state.messagesList} */}
+            <p>{this.props.user.userName}:</p>
+          {this.state.messagesList.map((message, i) =>{
             return(
               <ul key={i}>
-             <li>{message}</li>
+             <li>{message.user}: {message.message}</li>
               </ul>
 
             )
 
-          })} */}
+          })}
            
 
 
