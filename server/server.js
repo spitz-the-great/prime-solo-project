@@ -60,17 +60,9 @@ io.on('connection', socket => {
     io.sockets.emit('update messages', data)
   });
 
-
 })
-
-
 
 // <<<<<<<---- end socket.io trial arena
 
-
-/** Listen * */
-// app.listen(PORT, () => {
-//   console.log(`Listening on port: ${PORT}`);
-// });
 
 

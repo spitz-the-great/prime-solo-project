@@ -2,7 +2,20 @@
   "name": "prime-solo-project",
   "version": "0.1.0",
   "private": true,
-  "proxy": "http://localhost:5000",
+  "proxy": {
+   "/api": {
+     "target": "http://localhost:5000",
+     "ws": true
+   },
+   "/socket.io": {
+     "target": "http://localhost:5000",
+     "ws": true
+   },
+   "/sockjs-node": {
+     "target": "wss://localhost:5000",
+     "ws": true
+   } 
+  },
   "dependencies": {
     "axios": "^0.17.1",
     "bcrypt": "^2.0.1",

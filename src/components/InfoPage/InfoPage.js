@@ -17,32 +17,35 @@ class InfoPage extends Component {
   constructor() {
     super()
     this.state = {
-      
+
       color: 'white',
       newMessage: '',
       messagesList: [],
 
     }
+
+    socket.on('change color', (col) => {
+      document.body.style.backgroundColor = col
+    });
+
+    socket.on('update messages', (data) => {
+      console.log('from server: ', data);
+      this.updateMessageList(data)
+      console.log(this.state.messagesList)
+    });
   }
 
-  // method for emitting a socket.io event
   send = () => {
-    socket.emit('change color', this.state.color) // change 'red' to this.state.color
-
-    // this emits an event to the socket (your server) with an argument of 'red'
-    // you can make the argument any color you would like, or any kind of data you want to send.
-
-    // socket.emit('change color', 'red', 'yellow') | you can have multiple arguments
+    socket.emit('change color', this.state.color)
   }
 
   setColor = (color) => {
     this.setState({ color })
   }
 
-
   componentDidMount() {
     this.props.dispatch({ type: USER_ACTIONS.FETCH_USER });
-    socketIOClient({ path: '/socket', transports: ['websocket'] });
+    socketIOClient({  transports: ['websocket'] });
     socketIOClient.connect('http://localhost:5000', { transports: ['websocket'] });
   }
 
@@ -59,14 +62,16 @@ class InfoPage extends Component {
     console.log(this.state.newMessage);
   }
 
-  updateMessageList = () => {
+  updateMessageList = (data) => {
     // const socket = socketIOClient('http://localhost:5000', { transports: ['websocket'] });
-    socket.on('update messages', (data) => {
+    // socket.on('update messages', (data) => {
       console.log('from server: ', data);
+      const messagesList = this.state.messagesList;
+      messagesList.push(data);
       this.setState({
-        ...this.state, messagesList: data
+        messagesList
       })
-    });
+    // });
   }
 
   changeHandler = (event) => {
@@ -76,28 +81,9 @@ class InfoPage extends Component {
     })
   }
 
+  
   render() {
     let content = null;
-
-    // const socket = socketIOClient('http://localhost:5000', { transports: ['websocket'] });
-    // setting the color of our button
-    socket.on('change color', (col) => {
-      document.body.style.backgroundColor = col
-    });
-
-    socket.on('update messages', (data) => {
-      console.log('from server: ', data);
-      this.setState({
-        ...this.state.messagesList, messagesList: data
-      })
-    });
-
-    // socket.on is another method that checks for incoming events from the server
-    // This method is looking for the event 'change color'
-    // socket.on takes a callback function for the first argument
-
-
-
 
     if (this.props.user.userName) {
       content = (
@@ -126,7 +112,19 @@ class InfoPage extends Component {
             </input>
             <button type="submit" >Send Message</button>
           </form>
-          <div>{this.state.messagesList}
+          <div>
+            {this.state.messagesList}
+            
+          {/* {this.state.messagesList.map((message, i) =>{
+            return(
+              <ul key={i}>
+             <li>{message}</li>
+              </ul>
+
+            )
+
+          })} */}
+           
 
 
           </div>
