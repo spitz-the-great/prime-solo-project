@@ -17,10 +17,12 @@ class InfoPage extends Component {
   constructor() {
     super()
     this.state = {
-      
+
       color: 'white',
       newMessage: '',
-      messagesList: []
+      messagesList: [],
+      userList: [],
+      numberOfUsers: '',
 
     }
 
@@ -33,6 +35,10 @@ class InfoPage extends Component {
       this.updateMessageList(data)
       console.log(this.state.messagesList)
     });
+
+    socket.on('update_connected_users', (userList) => {
+      this.updateUserList(userList.connectedUsers);
+    })
   }
 
   send = () => {
@@ -45,13 +51,15 @@ class InfoPage extends Component {
 
   componentDidMount() {
     this.props.dispatch({ type: USER_ACTIONS.FETCH_USER });
-    socketIOClient({  transports: ['websocket'] });
+    socketIOClient({ transports: ['websocket'] });
     socketIOClient.connect('http://localhost:5000', { transports: ['websocket'] });
+    socket.emit('new user', this.props.user.userName);
   }
 
   componentDidUpdate() {
     if (!this.props.user.isLoading && this.props.user.userName === null) {
       this.props.history.push('home');
+      socket.emit('new user', this.props.user.userName);
     }
   }
 
@@ -61,7 +69,7 @@ class InfoPage extends Component {
       message: this.state.newMessage,
       user: this.props.user.userName
     }
-  
+
     // const socket = socketIOClient('http://localhost:5000', { transports: ['websocket'] });
     socket.emit('new message', {
       user: this.props.user.userName,
@@ -73,9 +81,14 @@ class InfoPage extends Component {
   updateMessageList = (data) => {
     // const socket = socketIOClient('http://localhost:5000', { transports: ['websocket'] });
     // socket.on('update messages', (data) => {
-      console.log('from server: ', data);
-      this.setState({messagesList: [...this.state.messagesList, data]});
+    console.log('from server: ', data);
+    this.setState({ messagesList: [...this.state.messagesList, data] });
     // });
+  }
+
+  updateUserList = (userList) => {
+    console.log('user list from server: ', userList);
+    this.setState({ userList: [...this.state.userList, userList] });
   }
 
   changeHandler = (event) => {
@@ -116,20 +129,25 @@ class InfoPage extends Component {
             <button type="submit" >Send Message</button>
           </form>
           <div>
-            {/* {this.state.messagesList} */}
-            <p>{this.props.user.userName}:</p>
-          {this.state.messagesList.map((message, i) =>{
-            return(
-              <ul key={i}>
-             <li>{message.user}: {message.message}</li>
-              </ul>
-
-            )
-
-          })}
-
+            {this.state.messagesList.map((message, i) => {
+              return (
+                <ul key={i}>
+                  <li>{message.user}: {message.message}</li>
+                </ul>
+              )
+            })}
           </div>
 
+          <div>Connected users:
+            {this.state.userList.map((user, i) => {
+              return (
+                <ul key={i}>
+                <br/>
+                  <li>{user}</li>
+                </ul>
+              )
+            })}
+          </div>
         </div>
       );
     }

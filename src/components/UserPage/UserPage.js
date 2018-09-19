@@ -6,16 +6,11 @@ import Nav from '../../components/Nav/Nav';
 import { USER_ACTIONS } from '../../redux/actions/userActions';
 import { triggerLogout } from '../../redux/actions/loginActions';
 
-
-
-
 const mapStateToProps = state => ({
   user: state.user,
 });
 
 class UserPage extends Component {
-
-  
 
   componentDidMount() {
     this.props.dispatch({ type: USER_ACTIONS.FETCH_USER });
@@ -35,12 +30,8 @@ class UserPage extends Component {
     this.props.history.push('info')
   }
 
-
-
   render() {
     
-
-
     let content = null;
 
     let dummyUsers = ["user1", "user2"];

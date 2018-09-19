@@ -32,7 +32,6 @@ app.use(express.static('build'));
 // App Set //
 const PORT = process.env.PORT || 5000;
 
-
 // <<<<<<<---- socket.io trial arena
 
 const server = app.listen(PORT, () => console.log(`Listening on port ${PORT}`))
@@ -40,6 +39,8 @@ const server = app.listen(PORT, () => console.log(`Listening on port ${PORT}`))
 const io = require('socket.io')(server, { path: '/socket.io' });
 
 let numberOfUsers = 0;
+
+let connectedUsers = [];
 
 io.on('connection', socket => {
   console.log('User connected');
@@ -50,15 +51,41 @@ io.on('connection', socket => {
   });
 
   socket.on('disconnect', () => {
-    console.log('user disconnected')
-  });
+    
+    console.log('user disconnected: ', socket.userName)
+    let i = connectedUsers.indexOf(socket.userName);
+    if (i != -1) {
+      connectedUsers.splice(i, 1);
+    }
+    numberOfUsers--;
+    
+    console.log('connected users: ', connectedUsers, 'number of users: ', numberOfUsers);
+    io.sockets.emit('update_connected_users', connectedUsers);
+  }); // end disconnect
 
-  // if emit from client is 'new message'...
+  
   socket.on('new message', (data) => {
-    // do the following:
+    
     console.log('in new message socket - server', data);
     io.sockets.emit('update messages', data)
-  });
+  }); // end new message
+
+  //update connected user list
+  socket.on('new user', (username) => {
+    numberOfUsers++;
+    socket.userName = username;
+
+    check = connectedUsers.includes(socket.userName);
+    if (check === false){
+
+    connectedUsers.push(socket.userName);
+    }
+    let data = {
+      connectedUsers, numberOfUsers}
+
+    io.sockets.emit('update_connected_users', data);
+    console.log('connected users from server: ', connectedUsers);
+  }); // end new user
 
 })
 
