@@ -15,21 +15,6 @@ function* fetchProfile() {
 }
 
 
-
-
-// function* fetchShelf() {
-//     try {
-//       const shelfResponse = yield call(axios.get, '/api/shelf')
-
-//       const responseAction = { type: 'SET_SHELF', payload: shelfResponse.data };
-//       yield put(responseAction);
-//     }
-//     catch (error) {
-//       console.log('ERROR IN - getShelfSaga(); - index.js', error);
-//       alert('unable to retrieve data');
-//     }
-//   }
-
 function* profileSaga() {
     yield takeLatest('FETCH_PROFILE', fetchProfile)
 }

@@ -70,7 +70,6 @@ class InfoPage extends Component {
       user: this.props.user.userName
     }
 
-    // const socket = socketIOClient('http://localhost:5000', { transports: ['websocket'] });
     socket.emit('new message', {
       user: this.props.user.userName,
       message: this.state.newMessage
@@ -79,16 +78,15 @@ class InfoPage extends Component {
   }
 
   updateMessageList = (data) => {
-    // const socket = socketIOClient('http://localhost:5000', { transports: ['websocket'] });
-    // socket.on('update messages', (data) => {
     console.log('from server: ', data);
     this.setState({ messagesList: [...this.state.messagesList, data] });
-    // });
+    
   }
 
   updateUserList = (userList) => {
     console.log('user list from server: ', userList);
-    this.setState({ userList: [...this.state.userList, userList] });
+    this.setState({ userList: [...this.state.userList, userList] 
+    });
   }
 
   changeHandler = (event) => {
@@ -142,7 +140,6 @@ class InfoPage extends Component {
             {this.state.userList.map((user, i) => {
               return (
                 <ul key={i}>
-                <br/>
                   <li>{user}</li>
                 </ul>
               )

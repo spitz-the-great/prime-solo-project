@@ -26,26 +26,16 @@ class ProfilePage extends Component {
         this.props.dispatch({ type: 'FETCH_PROFILE' });
     }
 
-    // function updateFunniness(id, newFunniness){
-    //     $.ajax({
-    //         method: 'PUT',
-    //         url: '/jokes/' + id,
-    //         data: { funniness: newFunniness },
-    //         success: function(response) {
-    //             console.log('update funniness response: ', response);            
-    //         }
-    //     });
-    // }
-
     updatePrivacy(userId, newSetting) {
-        axios()({
+        console.log('in update privacy put', userId, newSetting);
+        axios({
             method: 'PUT',
-            url: '/person' + userId,
+            url: '/person/privacy/' + userId,
             data: { setting: newSetting },
             success: function (response) {
                 console.log('update privacy response: ', response)
             }
-        })
+        });
     } // end updatePrivacy
 
     componentDidMount() {
@@ -69,7 +59,13 @@ class ProfilePage extends Component {
 
 
     setPrivate = () =>{
+        console.log('in set private')
+        this.updatePrivacy(this.props.user.id, 'private');
+    }
 
+    setPublic = () =>{
+        console.log('in set public')
+        this.updatePrivacy(this.props.user.id, 'public');
     }
 
 
