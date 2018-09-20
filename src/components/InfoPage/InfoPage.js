@@ -8,7 +8,7 @@ import './InfoPage.css';
 
 // socket.io
 import socketIOClient from 'socket.io-client';
-const socket = socketIOClient('http://localhost:5000', { transports: ['websocket'] });
+const socket = socketIOClient('10.100.100.198:5000', { transports: ['websocket'] });
 const mapStateToProps = state => ({
   user: state.user,
 });
@@ -52,7 +52,7 @@ class InfoPage extends Component {
   componentDidMount() {
     this.props.dispatch({ type: USER_ACTIONS.FETCH_USER });
     socketIOClient({ transports: ['websocket'] });
-    socketIOClient.connect('http://localhost:5000', { transports: ['websocket'] });
+    socketIOClient.connect('10.100.100.198:3000', { transports: ['websocket'] });
     socket.emit('new user', this.props.user.userName);
   }
 
@@ -80,13 +80,17 @@ class InfoPage extends Component {
   updateMessageList = (data) => {
     console.log('from server: ', data);
     this.setState({ messagesList: [...this.state.messagesList, data] });
-    
+
   }
 
   updateUserList = (userList) => {
     console.log('user list from server: ', userList);
-    this.setState({ userList: [...this.state.userList, userList] 
-    });
+    if(userList){
+      this.setState({
+        userList: userList,
+      });
+    }
+    
   }
 
   changeHandler = (event) => {
@@ -145,6 +149,7 @@ class InfoPage extends Component {
               )
             })}
           </div>
+
         </div>
       );
     }
