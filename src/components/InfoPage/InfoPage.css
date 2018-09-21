@@ -1,8 +1,24 @@
 .chat{
-    float: right
+    /* text-align: right; */
+
+        position: absolute;
+        right: 0px;
+        width: 50px;
+        
+
 }
 
 .others{
-    float: right
+    text-align: right;
      
+}
+
+.chatInput{
+    text-align: left;
+    float: left;
+}
+
+.right{
+    text-align: right;
+
 }

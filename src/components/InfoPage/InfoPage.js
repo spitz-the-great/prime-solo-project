@@ -11,6 +11,7 @@ import socketIOClient from 'socket.io-client';
 const socket = socketIOClient('10.100.100.198:5000', { transports: ['websocket'] });
 // http://localhost:5000
 // 10.100.100.198:5000
+
 const mapStateToProps = state => ({
   user: state.user,
 });
@@ -25,6 +26,7 @@ class InfoPage extends Component {
       messagesList: [],
       userList: [],
       numberOfUsers: '',
+      typingUser: ''
 
     }
 
@@ -41,6 +43,11 @@ class InfoPage extends Component {
     socket.on('update_connected_users', (userList) => {
       this.updateUserList(userList.connectedUsers);
     })
+
+    socket.on('update_typing_status', (typingUser) =>{
+      this.updateTypingStatus(typingUser);
+    })
+
   }
 
   send = () => {
@@ -57,9 +64,9 @@ class InfoPage extends Component {
     socketIOClient.connect('10.100.100.198:3000', { transports: ['websocket'] });
 
     // http://localhost:3000
-// 10.100.100.198:3000
+    // 10.100.100.198:3000
 
-    socket.emit('new user', this.props.user.userName);
+    
   }
 
   componentDidUpdate() {
@@ -67,6 +74,17 @@ class InfoPage extends Component {
       this.props.history.push('home');
       socket.emit('new user', this.props.user.userName);
     }
+  }
+
+  isTyping = () =>{
+    console.log('in is typing, user: ', this.props.user.userName)
+    socket.emit('is_typing', this.props.user.userName);
+  }
+
+  updateTypingStatus = (user) => {
+    console.log('in updateTyping, user: ', user);
+    this.setState({typingUser: user});
+    
   }
 
   newMessageClick = (event) => {
@@ -91,12 +109,11 @@ class InfoPage extends Component {
 
   updateUserList = (userList) => {
     console.log('user list from server: ', userList);
-    if(userList){
+    if (userList) {
       this.setState({
         userList: userList,
       });
     }
-    
   }
 
   changeHandler = (event) => {
@@ -104,6 +121,7 @@ class InfoPage extends Component {
       ...this.state,
       [event.target.name]: event.target.value,
     })
+    this.isTyping();
   }
 
   render() {
@@ -115,20 +133,9 @@ class InfoPage extends Component {
           <p>
             Chat Page
           </p>
-          <ul className="others">Others Online:
-            <br />
-            <li>user1</li>
-            <li>user2</li>
-          </ul>
-
-          <div className="chat">General Chat</div>
-
-          <div style={{ textAlign: "center" }}>
-            <button onClick={() => this.send()}>Change Color</button>
-            <button id="red" onClick={() => this.setColor('red')}>Red</button>
-            <button id="blue" onClick={() => this.setColor('blue')}>Blue</button>
-          </div>
-          <form onSubmit={this.newMessageClick}>
+          {JSON.stringify(this.state.typingUser)}
+          <p>{this.state.typingUser} is typing...</p>
+          <form className="chatInput" onSubmit={this.newMessageClick}>
             <input
               onChange={this.changeHandler}
               value={this.state.newMessage}
@@ -136,26 +143,50 @@ class InfoPage extends Component {
             </input>
             <button type="submit" >Send Message</button>
           </form>
-          <div>
+
+
+          <h3 className="right">Connected users:</h3>
+          <div className="chat">
+
+
+            <div className="chat">
+              {this.state.userList.map((user, i) => {
+                return (
+
+                  <ul className="right" key={i}>
+                    <li className="right">{user}</li>
+                  </ul>
+
+                )
+              })}
+            </div>
+          </div>
+          <br />
+          <br></br>
+          <h3 className="right">General Chat:</h3>
+          <br />
+          <br />
+
+          <div className="right">
             {this.state.messagesList.map((message, i) => {
               return (
-                <ul key={i}>
-                  <li>{message.user}: {message.message}</li>
+                <ul className="right" key={i}>
+                  <li className="right" >{message.user}: {message.message}</li>
                 </ul>
               )
             })}
           </div>
 
-          <div>Connected users:
-            {this.state.userList.map((user, i) => {
-              return (
-                <ul key={i}>
-                  <li>{user}</li>
-                </ul>
-              )
-            })}
-          </div>
 
+          <br />
+          <br />
+          <div>
+            <div style={{ textAlign: "left" }}>
+              <button onClick={() => this.send()}>Change Color</button>
+              <button id="red" onClick={() => this.setColor('red')}>Red</button>
+              <button id="blue" onClick={() => this.setColor('blue')}>Blue</button>
+            </div>
+          </div>
         </div>
       );
     }
