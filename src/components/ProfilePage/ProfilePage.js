@@ -25,15 +25,19 @@ class ProfilePage extends Component {
     } // end constructor
 
     //// db calls vvvv
-    getProfile() {
+    getProfile = () =>{
+        
         this.props.dispatch({ type: 'FETCH_PROFILE' });
+        console.log('in get profile - client');
+
+
     }
 
     updatePrivacy(userId, newSetting) {
         console.log('in update privacy put', userId, newSetting);
         axios({
             method: 'PUT',
-            url: '/person/privacy/' + userId,
+            url: '/api/person/privacy/' + userId,
             data: { setting: newSetting },
             success: function (response) {
                 console.log('update privacy response: ', response)
@@ -48,7 +52,7 @@ class ProfilePage extends Component {
         console.log('in searchUsers', this.state.searchName, userToFind);
         axios({
             method: 'GET',
-            url: '/person/search/' + userToFind,
+            url: '/api/person/search/' + userToFind,
             data: { name: userToFind },
         })
             .then((response) => {

@@ -7,12 +7,13 @@ const router = express.Router();
  */
 
 router.get('/profile', (req, res) => {
+    console.log('in get profile');
     if (req.isAuthenticated()) {
         const query = `SELECT *
                         FROM  "person"
                         JOIN "user_profile"
                         ON "person"."id" = "user_profile"."user_id"
-                        WHERE "person"."id" = ${req.user.id}`;
+                        WHERE "person"."id" = ${req.user.id};`;
         pool.query(query).then((results) => {
             res.send(results.rows);
             // can set index of rows on this if expecting just one set

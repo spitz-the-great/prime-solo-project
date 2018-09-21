@@ -9,6 +9,8 @@ import './InfoPage.css';
 // socket.io
 import socketIOClient from 'socket.io-client';
 const socket = socketIOClient('10.100.100.198:5000', { transports: ['websocket'] });
+// http://localhost:5000
+// 10.100.100.198:5000
 const mapStateToProps = state => ({
   user: state.user,
 });
@@ -53,6 +55,10 @@ class InfoPage extends Component {
     this.props.dispatch({ type: USER_ACTIONS.FETCH_USER });
     socketIOClient({ transports: ['websocket'] });
     socketIOClient.connect('10.100.100.198:3000', { transports: ['websocket'] });
+
+    // http://localhost:3000
+// 10.100.100.198:3000
+
     socket.emit('new user', this.props.user.userName);
   }
 

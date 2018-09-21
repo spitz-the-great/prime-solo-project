@@ -4,7 +4,8 @@ import axios from 'axios';
 function* fetchProfile() {
 
     try {
-        const profileResponse = yield call(axios.get, '/person/profile')
+        console.log(' in get profile - saga')
+        const profileResponse = yield call(axios.get, '/api/person/profile');
         const responseAction = { type: 'SET_PROFILE', payload: profileResponse.data };
         yield put(responseAction);
     }
@@ -14,8 +15,8 @@ function* fetchProfile() {
     }
 }
 
-
 function* profileSaga() {
+    console.log('in fetch profile');
     yield takeLatest('FETCH_PROFILE', fetchProfile)
 }
 
