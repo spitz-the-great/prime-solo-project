@@ -1,24 +1,48 @@
-.chat{
-    /* text-align: right; */
-
-        position: absolute;
-        right: 0px;
-        width: 50px;
-        
-
+.infoContainer{
+    position: relative;
+    z-index: 1;
 }
 
+.chatContainer{
+    /* text-align: right; */
+    /* float: right; */
+    position: fixed;
+    width: 200px;
+    z-index: 1000;
+    right: 0;
+    top: 0;
+    margin: 20px;
+    padding:20px;
+    text-align: right;
+    display: inline-block;
+}
+/* 
 .others{
     text-align: right;
-     
 }
 
 .chatInput{
     text-align: left;
     float: left;
 }
-
+  */
 .right{
     text-align: right;
 
+}
+
+.userList{
+    text-align: right;
+}
+
+#submitButton{
+    font-family: 'Press Start 2P', cursive;
+}
+
+.chats{
+    text-align: left;
+    font-family: 'Roboto';
+}
+.typingUser{
+    position: relative;
 }

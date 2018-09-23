@@ -1,5 +1,6 @@
 body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif
+    /* font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif */
+    font-family: 'Press Start 2P', cursive;
 }
 
 .instructions h1 {
@@ -14,7 +15,7 @@ body {
 }
 
 form {
-    background-color: #dbd5d5;
+    /* background-color: #dbd5d5; */
     width: 30%;
     height: 250px;
     margin: 20px auto;
@@ -51,6 +52,7 @@ input[type="submit"] {
   background-color: black;
   width: 100%;
   border-radius: 0px;
+  /* position: absolute; */
 }
 
 ul {
@@ -86,9 +88,14 @@ li a:hover {
     padding: 14px 16px;
     text-decoration: none;
     margin: 0;
-    padding: 0;
+    
     overflow: hidden;
     text-decoration: underline;
     color: #eee;
 
+}
+
+/* app name header */
+.lead{
+    position: center;
 }

@@ -45,6 +45,8 @@ let connectedUsers = [];
 io.on('connection', socket => {
   console.log('User connected');
 
+  
+
   socket.on('change color', (color) => {
     console.log('Color Changed to: ', color)
     io.sockets.emit('change color', color)

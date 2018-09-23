@@ -4,11 +4,14 @@ import { connect } from 'react-redux';
 import Nav from '../../components/Nav/Nav';
 import { USER_ACTIONS } from '../../redux/actions/userActions';
 
+import TextField from '@material-ui/core/TextField';
+import Button from '@material-ui/core/Button';
+
 import './InfoPage.css';
 
 // socket.io
 import socketIOClient from 'socket.io-client';
-const socket = socketIOClient('10.100.100.198:5000', { transports: ['websocket'] });
+const socket = socketIOClient('192.168.1.5:5000', { transports: ['websocket'] });
 // http://localhost:5000
 // 10.100.100.198:5000
 
@@ -44,11 +47,11 @@ class InfoPage extends Component {
       this.updateUserList(userList.connectedUsers);
     })
 
-    socket.on('update_typing_status', (typingUser) =>{
+    socket.on('update_typing_status', (typingUser) => {
       this.updateTypingStatus(typingUser);
     })
 
-    socket.on('typing_status_clear', () =>{
+    socket.on('typing_status_clear', () => {
       this.updateTypingStatus('');
     })
 
@@ -65,8 +68,8 @@ class InfoPage extends Component {
   componentDidMount() {
     this.props.dispatch({ type: USER_ACTIONS.FETCH_USER });
     socketIOClient({ transports: ['websocket'] });
-    socketIOClient.connect('10.100.100.198:3000', { transports: ['websocket'] });
-
+    socketIOClient.connect('192.168.1.5:3000', { transports: ['websocket'] });
+    //192.168.1.5
     // http://localhost:3000
     // 10.100.100.198:3000
 
@@ -80,15 +83,15 @@ class InfoPage extends Component {
     }
   }
 
-  isTyping = () =>{
+  isTyping = () => {
     console.log('in is typing, user: ', this.props.user.userName)
     socket.emit('is_typing', this.props.user.userName);
   }
 
   updateTypingStatus = (user) => {
     console.log('in updateTyping, user: ', user);
-    this.setState({typingUser: user});
-    
+    this.setState({ typingUser: user });
+
   }
 
   newMessageClick = (event) => {
@@ -134,72 +137,64 @@ class InfoPage extends Component {
 
     if (this.props.user.userName) {
       content = (
-        <div>
+        <div className="infoContainer">
           <p>
             Chat Page
           </p>
+          <div className="chatContainer">
+            <h4 className="right">Connected users:</h4>
+            <div className="typingUser">
+              {this.state.typingUser &&
+                <p>{this.state.typingUser}, is typing...</p>}
+            </div>
 
-          {/* <div>{this.props.profile[0].privacy_setting &&
-                        <p>Current privacy setting: {this.props.profile[0].privacy_setting}</p>
-                    }</div>
-        <div> */}
-        <div>
-        {this.state.typingUser && 
-          <p>{this.state.typingUser}, is typing...</p>
-
-          }</div>
-          <form className="chatInput" onSubmit={this.newMessageClick}>
-            <input
-              onChange={this.changeHandler}
-              value={this.state.newMessage}
-              type="text" name="newMessage">
-            </input>
-            <button type="submit" >Send Message</button>
-          </form>
-
-
-          <h3 className="right">Connected users:</h3>
-          <div className="chat">
             {/* {JSON.stringify(this.state.userList)} */}
 
-            <div className="chat">
+            <div className="userList">
               {this.state.userList.map((user, i) => {
                 return (
-
                   <ul className="right" key={i}>
                     <li className="right">{user}</li>
                   </ul>
-
                 )
               })}
             </div>
-          </div>
-          <br />
-          <br></br>
-          <h3 className="right">General Chat:</h3>
-          <br />
-          <br />
+            <br />
+            <br></br>
 
-          <div className="right">
-            {this.state.messagesList.map((message, i) => {
-              return (
-                <ul className="right" key={i}>
-                  <li className="right" >{message.user}: {message.message}</li>
-                </ul>
-              )
-            })}
-          </div>
-
-
-          <br />
-          <br />
-          <div>
-            <div style={{ textAlign: "left" }}>
-              <button onClick={() => this.send()}>Change Color</button>
-              <button id="red" onClick={() => this.setColor('red')}>Red</button>
-              <button id="blue" onClick={() => this.setColor('blue')}>Blue</button>
+            <h4>General Chat:</h4>
+            <div>
+              <form onSubmit={this.newMessageClick}>
+                <TextField
+                  variant="outlined"
+                  label="chat it up"
+                  onChange={this.changeHandler}
+                  value={this.state.newMessage}
+                  type="text" name="newMessage">
+                </TextField>
+                <Button id="submitButton" type="submit" variant="outlined">Submit</Button>
+              </form>
+              <div className="chatLog">
+              {this.state.messagesList.map((message, i) => {
+                return (
+                  <ul className="chats" key={i}>
+                    <li className="chats" >{message.user}: {message.message}</li>
+                  </ul>
+                )
+              })}
+            </div>
             </div>
           </div>
+          {/* end chatContainer div */}
+          <br />
+          <br />
+
+          <div style={{ textAlign: "left" }}>
+            <button onClick={() => this.send()}>Change Color</button>
+            <button id="red" onClick={() => this.setColor('red')}>Red</button>
+            <button id="blue" onClick={() => this.setColor('blue')}>Blue</button>
+          </div>
+
         </div>
       );
     }

@@ -2,14 +2,18 @@
 .canvasContainer{
     position: relative;
     z-index: 1;
-}
+    /* background-image: url("../../../public/bg1.png"); */
+
+    /* "../../../public/bg1.png" */
+} 
 
 /* this is the first child of the my container div
  which is the canvas element itself */
 .canvasActual {
     top:0;
     left:0;
-    background-color: skyblue;
+    /* background-color: skyblue; */
+    
     position: relative;
 
     border: 2px black;
@@ -36,3 +40,16 @@
     overflow:auto;
 }
 
+/* #textField{
+    padding: 5px;
+} */
+
+#button{
+    font-family: 'Press Start 2P', cursive;
+}
+
+#bg{
+    /* display: none; */
+    z-index: 1000;
+    position: absolute;
+}
