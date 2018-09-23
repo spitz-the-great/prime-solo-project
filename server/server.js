@@ -67,11 +67,14 @@ io.on('connection', socket => {
   socket.on('new message', (data) => {
 
     console.log('in new message socket - server', data);
-    io.sockets.emit('update messages', data)
+    io.sockets.emit('update messages', data);
+    io.sockets.emit('typing_status_clear');
+    
   }); // end new message
 
   //update connected user list
   socket.on('new user', (username) => {
+    console.log('new user: ', username);
     numberOfUsers++;
     socket.userName = username;
 
@@ -81,7 +84,7 @@ io.on('connection', socket => {
       connectedUsers.push(socket.userName);
     }
     let data = {
-      connectedUsers, numberOfUsers
+      connectedUsers
     }
 
     io.sockets.emit('update_connected_users', data);

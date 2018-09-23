@@ -3,20 +3,21 @@
   "version": "0.1.0",
   "private": true,
   "proxy": {
-   "/api": {
-     "target": "http://localhost:5000",
-     "ws": true
-   },
-   "/socket.io": {
-     "target": "http://localhost:5000",
-     "ws": true
-   },
-   "/sockjs-node": {
-     "target": "wss://localhost:5000",
-     "ws": true
-   } 
+    "/api": {
+      "target": "http://localhost:5000",
+      "ws": true
+    },
+    "/socket.io": {
+      "target": "http://localhost:5000",
+      "ws": true
+    },
+    "/sockjs-node": {
+      "target": "wss://localhost:5000",
+      "ws": true
+    }
   },
   "dependencies": {
+    "@material-ui/core": "^3.1.0",
     "axios": "^0.17.1",
     "bcrypt": "^2.0.1",
     "body-parser": "^1.18.2",

@@ -70,6 +70,42 @@ router.put('/privacy/:id', (req, res) => {
         })
 });
 
+router.delete('/delete/:id', (req, res) => {
+    
+    const id = req.params.id;
+    console.log('id to delete: ', id);
+    const deleteQuery = `DELETE FROM person
+                         WHERE id=$1;`;
+    pool.query(deleteQuery, [id])
+        .then((result) => {
+            console.log('delete result: ', result);
+            res.sendStatus(200);
+        })
+        .catch((error) => {
+            console.log('error deleting a user', error);
+            res.sendStatus(500);
+        });
+});
+
+// router.delete('/:id', function(req, res) {
+//     const id = req.params.id;
+//     console.log('id to delete: ', id);
+
+//     // Prepared statement for delete
+//     const queryText = 'DELETE FROM jokes WHERE id=$1;';
+//     pool.query(queryText, [id],)
+//         .then((result) => { 
+//             console.log('query results: ', result);
+//             res.sendStatus(200);
+//         })
+//         // error handling
+//         .catch((err) => {
+//             console.log('error making delete query:', err);
+//             res.sendStatus(500);
+//         });
+
+// });
+
 
 /**
  * POST route template

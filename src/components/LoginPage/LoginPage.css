@@ -1,0 +1,38 @@
+/* this is the container div for the entire page render */
+.canvasContainer{
+    position: relative;
+    z-index: 1;
+}
+
+/* this is the first child of the my container div
+ which is the canvas element itself */
+.canvasActual {
+    top:0;
+    left:0;
+    background-color: skyblue;
+    position: relative;
+
+    border: 2px black;
+    z-index: 1000;
+    
+}
+
+/* this was a trial thing */
+.canvasContainer:first-child{
+    opacity: .99;
+}
+
+/* this is all the content i want on top of the canvas */
+.content {
+    position:absolute;
+    z-index: 1100;
+    left:0; 
+    right:0;
+    top:0; 
+    bottom:0;
+    margin:auto;
+    max-width:100%;
+    max-height:100%;
+    overflow:auto;
+}
+

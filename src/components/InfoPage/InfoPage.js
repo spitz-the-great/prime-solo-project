@@ -48,6 +48,10 @@ class InfoPage extends Component {
       this.updateTypingStatus(typingUser);
     })
 
+    socket.on('typing_status_clear', () =>{
+      this.updateTypingStatus('');
+    })
+
   }
 
   send = () => {
@@ -66,13 +70,13 @@ class InfoPage extends Component {
     // http://localhost:3000
     // 10.100.100.198:3000
 
-    
+    socket.emit('new user', this.props.user.userName);
   }
 
   componentDidUpdate() {
     if (!this.props.user.isLoading && this.props.user.userName === null) {
       this.props.history.push('home');
-      socket.emit('new user', this.props.user.userName);
+      // socket.emit('new user', this.props.user.userName);
     }
   }
 
@@ -98,6 +102,7 @@ class InfoPage extends Component {
       user: this.props.user.userName,
       message: this.state.newMessage
     });
+    this.updateTypingStatus('');
     console.log(data);
   }
 
@@ -133,8 +138,16 @@ class InfoPage extends Component {
           <p>
             Chat Page
           </p>
-          {JSON.stringify(this.state.typingUser)}
-          <p>{this.state.typingUser} is typing...</p>
+
+          {/* <div>{this.props.profile[0].privacy_setting &&
+                        <p>Current privacy setting: {this.props.profile[0].privacy_setting}</p>
+                    }</div>
+        <div> */}
+        <div>
+        {this.state.typingUser && 
+          <p>{this.state.typingUser}, is typing...</p>
+
+          }</div>
           <form className="chatInput" onSubmit={this.newMessageClick}>
             <input
               onChange={this.changeHandler}
@@ -147,7 +160,7 @@ class InfoPage extends Component {
 
           <h3 className="right">Connected users:</h3>
           <div className="chat">
-
+            {/* {JSON.stringify(this.state.userList)} */}
 
             <div className="chat">
               {this.state.userList.map((user, i) => {

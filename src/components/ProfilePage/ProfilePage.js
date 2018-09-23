@@ -20,13 +20,13 @@ class ProfilePage extends Component {
             privacySetting: '',
             searchName: '',
             foundUserName: '',
-            // profileList: this.props.profile.profileReducer,
+            // profileList: this.props.profile[0].profileReducer,
         }
     } // end constructor
 
     //// db calls vvvv
-    getProfile = () =>{
-        
+    getProfile = () => {
+
         this.props.dispatch({ type: 'FETCH_PROFILE' });
         console.log('in get profile - client');
 
@@ -65,6 +65,20 @@ class ProfilePage extends Component {
                 console.log(error);
             });
     }
+
+    // click handler for "delete user" button
+    deleteUser = () => {
+        console.log('in delete user, user: ', this.props.user.id);
+        let id = this.props.user.id;
+        axios({
+            method: 'DELETE',
+            url: '/api/person/delete/' + id,
+            success: function (response) {
+                console.log('deleted user', response);
+            }
+        })
+    } // end deleteUser
+
     //// end db calls ^^^
 
     componentDidMount() {
@@ -84,12 +98,14 @@ class ProfilePage extends Component {
             [event.target.name]: event.target.value
         })
     }
-
+    
+    // click handler for "set to private" button
     setPrivate = () => {
         console.log('in set private')
         this.updatePrivacy(this.props.user.id, 'private');
     }
 
+    // click handler for "set to public" button
     setPublic = () => {
         console.log('in set public')
         this.updatePrivacy(this.props.user.id, 'public');
@@ -101,7 +117,8 @@ class ProfilePage extends Component {
         // let passUrl = location.substr(24, 7);
 
         let content = null;
-        // let setting = this.props.profile[0].privacy;
+        // let setting = this.props.profile[0].privacy_setting;
+
         if (this.props.user.userName) {
             content = (
                 <div>
@@ -109,6 +126,10 @@ class ProfilePage extends Component {
                     <div>{this.props.profile[0].privacy_setting &&
                         <p>Current privacy setting: {this.props.profile[0].privacy_setting}</p>
                     }</div>
+
+                    {/* <div>{setting &&
+                    <p>Current privacy setting: {setting}</p>
+                     } </div> */}
                     <br />
 
                     <br />
@@ -128,6 +149,8 @@ class ProfilePage extends Component {
 
                     <button onClick={this.setPrivate}>Set To Private</button>
                     <button onClick={this.setPublic}>Set To Public</button>
+                    <br /><br />
+                    <button onClick={this.deleteUser}>Delete Account</button>
 
                 </div>
             );
