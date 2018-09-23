@@ -1,12 +1,10 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-
+import Matter from "matter-js";
 import Nav from '../../components/Nav/Nav';
 import { USER_ACTIONS } from '../../redux/actions/userActions';
-
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
-
 import './InfoPage.css';
 
 // socket.io
@@ -55,7 +53,44 @@ class InfoPage extends Component {
       this.updateTypingStatus('');
     })
 
+    // >>>>>>>>>>>> matter.js start
+    // module aliases
+    var Engine = Matter.Engine,
+      Render = Matter.Render,
+      World = Matter.World,
+      Bodies = Matter.Bodies;
+
+    // create an engine
+    var engine = Engine.create();
+
+    // create a renderer
+    var render = Render.create({
+      element: document.body,
+      engine: engine
+    });
+
+    // create two boxes and a ground
+    var boxA = Bodies.rectangle(400, 200, 80, 80);
+    var boxB = Bodies.rectangle(450, 50, 80, 80);
+    var ground = Bodies.rectangle(400, 610, 810, 60, { isStatic: true });
+
+    // add all of the bodies to the world
+    World.add(engine.world, [boxA, boxB, ground]);
+
+    // run the engine
+    Engine.run(engine);
+
+    // run the renderer
+    Render.run(render);
+
+    // >>>>>>>>>>>> matter.js end
+
+
+
+
   }
+
+
 
   send = () => {
     socket.emit('change color', this.state.color)
@@ -175,14 +210,14 @@ class InfoPage extends Component {
                 <Button id="submitButton" type="submit" variant="outlined">Submit</Button>
               </form>
               <div className="chatLog">
-              {this.state.messagesList.map((message, i) => {
-                return (
-                  <ul className="chats" key={i}>
-                    <li className="chats" >{message.user}: {message.message}</li>
-                  </ul>
-                )
-              })}
-            </div>
+                {this.state.messagesList.map((message, i) => {
+                  return (
+                    <ul className="chats" key={i}>
+                      <li className="chats" >{message.user}: {message.message}</li>
+                    </ul>
+                  )
+                })}
+              </div>
             </div>
           </div>
           {/* end chatContainer div */}

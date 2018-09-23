@@ -55,7 +55,11 @@ class LoginPage extends Component {
 
     ctx.fillRect(0, 0, 100, 100);
 
+
+    ctx.drawImage(bgImage, 0, 0);
+
     bgImage.onload = () => {
+      console.log('in onload');
      ctx.drawImage(bgImage, 0, 0);
     }
   
@@ -103,12 +107,12 @@ renderAlert() {
 }
 
 render() {
-  const { classes } = this.props;
+  
   return (
 
     // this is the container div for the entire render, 
     // named canvasContainer instead of container to avoid conflicts
-    <div className="canvasContainer">
+    <div className="canvasContainer" >
 
       <canvas ref="canvas"
         className="canvasActual"
@@ -116,7 +120,7 @@ render() {
       </canvas>
 
       <img id="bg" ref="bg"
-      src={bg1.png}></img>
+      src={bg1} onLoad={() => console.log('LOADED')}></img>
 
       {this.renderAlert()}
       {/* {/* this div wraps the entire form and is the 
