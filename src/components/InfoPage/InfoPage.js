@@ -5,11 +5,12 @@ import Nav from '../../components/Nav/Nav';
 import { USER_ACTIONS } from '../../redux/actions/userActions';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
+import Grid from '@material-ui/core/Grid';
 import './InfoPage.css';
 
 // socket.io
 import socketIOClient from 'socket.io-client';
-const socket = socketIOClient('192.168.1.5:5000', { transports: ['websocket'] });
+const socket = socketIOClient('10.100.100.198:5000', { transports: ['websocket'] });
 // http://localhost:5000
 // 10.100.100.198:5000
 
@@ -61,7 +62,7 @@ class InfoPage extends Component {
 
     // this.canvas.width = window.innerWidth;
     // this.canvas.height = window.innerHeight;
-    
+
     // window.addEventListener("resize", function(){
     //     canvas.width = window.innerWidth;
     //     canvas.height = window.innerHeight;
@@ -84,8 +85,9 @@ class InfoPage extends Component {
     //   return Math.round(percent / 100 * window.innerHeight);
     // }
     // create a renderer
-    var render = Render.create( {
-      element: canvas,
+    var render = Render.create({
+      // element: canvas, << breaks everything
+      element: document.body,
       engine: engine,
       width: window.innerWidth,
       height: window.innerHeight,
@@ -123,14 +125,14 @@ class InfoPage extends Component {
   componentDidMount() {
     this.props.dispatch({ type: USER_ACTIONS.FETCH_USER });
     socketIOClient({ transports: ['websocket'] });
-    socketIOClient.connect('192.168.1.5:3000', { transports: ['websocket'] });
+    socketIOClient.connect('10.100.100.198:3000', { transports: ['websocket'] });
     //192.168.1.5
     // http://localhost:3000
     // 10.100.100.198:3000
 
     socket.emit('new user', this.props.user.userName);
 
-    
+
 
   } // end didMount
 
@@ -165,6 +167,11 @@ class InfoPage extends Component {
     });
     this.updateTypingStatus('');
     console.log(data);
+    this.setState({
+      newMessage:'',
+    })
+    
+
   }
 
   updateMessageList = (data) => {
@@ -204,51 +211,59 @@ class InfoPage extends Component {
           <p>
             Chat Page
           </p>
-          <div className="chatContainer">
-            <h4 className="right">Connected users:</h4>
-            <div className="typingUser">
-              {this.state.typingUser &&
-                <p>{this.state.typingUser}, is typing...</p>}
-            </div>
+          <Grid
+            container
+            direction="column"
+            justify="flex-start"
+            alignItems="flex-end"
+          >
+            <div className="chatContainer">
+              <h4 className="right">Connected users:</h4>
+              <div className="typingUser">
+                {this.state.typingUser &&
+                  <p>{this.state.typingUser}, is typing...</p>}
+              </div>
 
-            {/* {JSON.stringify(this.state.userList)} */}
+              {/* {JSON.stringify(this.state.userList)} */}
 
-            <div className="userList">
-              {this.state.userList.map((user, i) => {
-                return (
-                  <ul className="right" key={i}>
-                    <li className="right">{user}</li>
-                  </ul>
-                )
-              })}
-            </div>
-            <br />
-            <br></br>
-
-            <h4>General Chat:</h4>
-            <div>
-              <form onSubmit={this.newMessageClick}>
-                <TextField
-                  variant="outlined"
-                  label="chat it up"
-                  onChange={this.changeHandler}
-                  value={this.state.newMessage}
-                  type="text" name="newMessage">
-                </TextField>
-                <Button id="submitButton" type="submit" variant="outlined">Submit</Button>
-              </form>
-              <div className="chatLog">
-                {this.state.messagesList.map((message, i) => {
+              <div className="userList">
+                {this.state.userList.map((user, i) => {
                   return (
-                    <ul className="chats" key={i}>
-                      <li className="chats" >{message.user}: {message.message}</li>
+                    <ul id="connectedUsers" key={i}>
+                      <li >{user}</li>
                     </ul>
                   )
                 })}
               </div>
+              <br />
+              <br></br>
+
+              <h4>General Chat:</h4>
+              <div>
+                <form className="chatForm"onSubmit={this.newMessageClick}>
+                  <TextField
+                    id="chatInput"
+                    variant="outlined"
+                    label="chat it up"
+                    onChange={this.changeHandler}
+                    value={this.state.newMessage}
+                    type="text" name="newMessage">
+                  </TextField>
+                  <Button id="submitButton" type="submit" variant="outlined">Submit</Button>
+                </form>
+                <div className="chatLog">
+                  {this.state.messagesList.map((message, i) => {
+                    return (
+                      <ul className="chats" key={i}>
+                        <li className="chats" >{message.user}: {message.message}</li>
+                      </ul>
+                    )
+                  })}
+                </div>
+              </div>
             </div>
-          </div>
-          {/* end chatContainer div */}
+            {/* end chatContainer div */}
+            </Grid>
           <br />
           <br />
 
