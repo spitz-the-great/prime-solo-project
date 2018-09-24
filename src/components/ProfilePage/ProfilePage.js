@@ -84,6 +84,9 @@ class ProfilePage extends Component {
     componentDidMount() {
         this.props.dispatch({ type: USER_ACTIONS.FETCH_USER });
         this.getProfile();
+        // this.setState({
+        //     privacy_setting: this.props.profile[0].privacy_setting
+        // })
     }
 
     componentDidUpdate() {
@@ -103,12 +106,16 @@ class ProfilePage extends Component {
     setPrivate = () => {
         console.log('in set private')
         this.updatePrivacy(this.props.user.id, 'private');
+        
+        this.getProfile();
     }
 
     // click handler for "set to public" button
     setPublic = () => {
         console.log('in set public')
         this.updatePrivacy(this.props.user.id, 'public');
+        
+        this.getProfile();
     }
 
     render() {
@@ -126,6 +133,7 @@ class ProfilePage extends Component {
                     <div>{this.props.profile[0].privacy_setting &&
                         <p>Current privacy setting: {this.props.profile[0].privacy_setting}</p>
                     }</div>
+                    {/* <div>{this.state.privacySetting}</div> */}
 
                     {/* <div>{setting &&
                     <p>Current privacy setting: {setting}</p>

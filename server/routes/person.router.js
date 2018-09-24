@@ -70,6 +70,24 @@ router.put('/privacy/:id', (req, res) => {
         })
 });
 
+router.put('/avatar/:id', (req, res) => {
+    const userId = req.user.id;
+    const avatar = req.body;
+    console.log('update avatar to: ', req.body);
+    const privacyQuery = `UPDATE user_profile 
+                            SET avatar=$1
+                            WHERE user_id=$2;`;
+    pool.query(privacyQuery, [avatar.avatar, userId])
+        .then((result) => {
+            console.log('update result: ', result);
+            res.sendStatus(200);
+        })
+        .catch((error) => {
+            console.log('error updating avatar setting: ', error);
+            res.sendStatus(500);
+        })
+});
+
 router.delete('/delete/:id', (req, res) => {
     
     const id = req.params.id;

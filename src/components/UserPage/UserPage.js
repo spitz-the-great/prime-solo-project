@@ -90,11 +90,8 @@ class UserPage extends Component {
           </h1>
           <p>Your ID is: {this.props.user.id}</p>
 
-          <button onClick={this.enterChatPage}>
-            Join Main Chat
-          </button>
-
-          <SimpleDialogDemo history={this.props.history} enterChatPage={this.enterChatPage} />
+          <SimpleDialogDemo history={this.props.history}
+          userId={this.props.user.id} enterChatPage={this.enterChatPage} />
           <ul>Others Online:
             <br />
             

@@ -34,6 +34,17 @@ class InfoPage extends Component {
 
     }
 
+    this.canvasRef = React.createRef();
+
+    
+
+    // this.setTextInputRef = element => {
+    //   this.canvasRef = element;
+    // };
+
+
+    
+
     socket.on('change color', (col) => {
       document.body.style.backgroundColor = col
     });
@@ -80,19 +91,20 @@ class InfoPage extends Component {
     // create an engine
     var engine = Engine.create();
 
-    // setRenderWidth = (percent) => {
-    //   return Math.round(percent / 100 * window.innerWidth);
-    // }
-    // setRenderHeight = (percent) => {
-    //   return Math.round(percent / 100 * window.innerHeight);
-    // }
     // create a renderer
-    var render = Render.create({
+    var render = Render.create( {
+      // element: document.body,
       // element: canvas, << breaks everything
-      element: document.body,
+      element: this.canvasRef.current, // << makes container appear at 0 height
       engine: engine,
-      width: window.innerWidth,
-      height: window.innerHeight,
+      options:{
+      // width: window.innerWidth,
+      // height: window.innerHeight,
+
+      width: 1000, 
+      height: 1000,
+
+      }
       // background: ,
       // canvas: myCanvas,
     });
@@ -114,6 +126,8 @@ class InfoPage extends Component {
     // >>>>>>>>>>>> matter.js end
   } // end constructor
 
+ // create function outside constructor that contains all the matter stuff and call on didMount
+
 
 
   send = () => {
@@ -131,6 +145,7 @@ class InfoPage extends Component {
     //192.168.1.5
     // http://localhost:3000
     // 10.100.100.198:3000
+    
 
     socket.emit('new user', this.props.user.userName);
 
@@ -202,14 +217,20 @@ class InfoPage extends Component {
   render() {
     let content = null;
 
+    const node = this.canvasRef.current;
+
     if (this.props.user.userName) {
       content = (
         <div className="infoContainer">
 
-          <canvas ref="infoCanvas"
+<div ref={this.canvasRef} className="canvasActual"></div>
+
+
+          {/* <canvas id="canvas"
+          ref="infoCanvas"
             className="canvasActual"
             width="600" height="450">
-          </canvas>
+          </canvas> */}
           <p>
             Chat Page
           </p>

@@ -1,4 +1,8 @@
 import React from 'react';
+import { connect } from 'react-redux';
+import axios from 'axios';
+
+// MATERIAL-UI
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
@@ -15,21 +19,15 @@ import Typography from '@material-ui/core/Typography';
 import blue from '@material-ui/core/colors/blue';
 import classNames from 'classnames';
 
-import cat from '../../avatarImages/bullet_cat.jpg';
-import nyan from '../../avatarImages/nyan.png';
+// import cat from '../../avatarImages/bullet_cat.jpg';
+// import nyan from '../../avatarImages/nyan.png';
 
 const emails = ['username@gmail.com', 'user02@gmail.com'];
 
 const avatarList = [
-    'hoverCat',
-];
-
-// const avatarList = [
-//     {name: 'hoverCat', imgPath: '../../../public/bullet_cat.jpg' },
-//     {name: 'nyanCat', imgPath: '../../../public/nyan.png' },
-// ]
-//   {name: 'hoverCat', imgPath: '../../../public/bullet_cat.jpg' }
-
+    { name: 'hoverCat', imgPath: 'avatars/bullet_cat.jpg' },
+    { name: 'nyanCat', imgPath: 'avatars/nyan.png' },
+]
 
 const styles = {
     avatar: {
@@ -45,11 +43,12 @@ class SimpleDialog extends React.Component {
 
     handleClose = () => {
         this.props.onClose(this.props.selectedValue);
-        
-    };
 
-    handleListItemClick = value => {
+    };
+// may need =value => event => {
+    handleListItemClick = value  => {
         this.props.onClose(value);
+        
     };
 
     render() {
@@ -60,21 +59,16 @@ class SimpleDialog extends React.Component {
                 <DialogTitle id="simple-dialog-title">Select Your Hero!</DialogTitle>
                 <div>
                     <List>
-                        {avatarList.map(avatar => (
-                            <ListItem button onClick={() => this.handleListItemClick(avatar)} key={avatar}>
+                        {avatarList.map((avatar, i) => (
+                            <ListItem button onClick={() => this.handleListItemClick(avatar.name)} key={i}>
                                 <ListItemAvatar>
                                     <Avatar
-                                        className={classNames(classes.avatar, classes.bigAvatar)} src={cat} >
-                                        {/* src={`${imageBaseURL}${item.image}`} */}
+                                        className={classNames(classes.avatar, classes.bigAvatar)} src={avatar.imgPath} >
                                     </Avatar>
                                 </ListItemAvatar>
-                                <ListItemText primary={avatar} />
+                                <ListItemText primary={avatar.name} />
                             </ListItem>
                         ))}
-
-
-
-
                     </List>
                 </div>
             </Dialog>
@@ -91,14 +85,23 @@ SimpleDialog.propTypes = {
 const SimpleDialogWrapped = withStyles(styles)(SimpleDialog);
 
 class SimpleDialogDemo extends React.Component {
-    state = {
-        open: false,
-        selectedValue: avatarList[1],
-    };
 
+    // const mapStateToProps = state =>({
+    //     userAvatar: state.avatarReducer
+    // });
+
+    constructor(props){
+        super(props)
+
+        this.state = {
+            open: false,
+            selectedValue: '',
+        }; 
+    }
+    
     enterChatPage = () => {
         console.log('in enterChatPage');
-        this.props.history.push('info');
+        // this.props.history.push('info');
     }
 
     handleClickOpen = () => {
@@ -107,26 +110,48 @@ class SimpleDialogDemo extends React.Component {
         });
     };
 
+    updateAvatar(userId, newAvatar) {
+        console.log('in update avatar put', userId, newAvatar);
+        axios({
+            method: 'PUT',
+            url: '/api/person/avatar/' + userId,
+            data: { avatar: newAvatar },
+            success: function (response) {
+                console.log('update avatar response: ', response)
+            }
+        });
+    } 
+
     handleClose = value => {
         this.setState({ selectedValue: value, open: false });
         console.log('in handleClose');
-        this.enterChatPage(); 
+        this.updateAvatar(this.props.userId, value);
+
+
+        
+        this.props.history.push('info');
+        // this.enterChatPage();
     };
 
     render() {
+    
         return (
             <div>
-                <Typography variant="subheading">Selected Hero: {this.state.selectedValue}</Typography>
                 <br />
                 <Button onClick={this.handleClickOpen}>Enter Main Chat</Button>
                 <SimpleDialogWrapped
+                    // push={this.enterChatPage}
+                    history={this.props.history}
                     selectedValue={this.state.selectedValue}
                     open={this.state.open}
                     onClose={this.handleClose}
                 />
+                <Typography variant="subheading">Selected Hero: {this.state.selectedValue}</Typography>
             </div>
         );
     }
 }
 
 export default SimpleDialogDemo;
+
+// export default connect(mapStateToProps)(SimpleDialogDemo);
