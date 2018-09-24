@@ -53,6 +53,20 @@ class InfoPage extends Component {
       this.updateTypingStatus('');
     })
 
+
+    const canvas = this.refs.infoCanvas;
+    // const ctx = canvas.getContext("2d");
+    // ctx.canvas.width = window.innerWidth;
+    // ctx.canvas.height = window.innerHeight;
+
+    // this.canvas.width = window.innerWidth;
+    // this.canvas.height = window.innerHeight;
+    
+    // window.addEventListener("resize", function(){
+    //     canvas.width = window.innerWidth;
+    //     canvas.height = window.innerHeight;
+    // });
+
     // >>>>>>>>>>>> matter.js start
     // module aliases
     var Engine = Matter.Engine,
@@ -63,10 +77,20 @@ class InfoPage extends Component {
     // create an engine
     var engine = Engine.create();
 
+    // setRenderWidth = (percent) => {
+    //   return Math.round(percent / 100 * window.innerWidth);
+    // }
+    // setRenderHeight = (percent) => {
+    //   return Math.round(percent / 100 * window.innerHeight);
+    // }
     // create a renderer
-    var render = Render.create({
-      element: document.body,
-      engine: engine
+    var render = Render.create( {
+      element: canvas,
+      engine: engine,
+      width: window.innerWidth,
+      height: window.innerHeight,
+      // background: ,
+      // canvas: myCanvas,
     });
 
     // create two boxes and a ground
@@ -84,11 +108,7 @@ class InfoPage extends Component {
     Render.run(render);
 
     // >>>>>>>>>>>> matter.js end
-
-
-
-
-  }
+  } // end constructor
 
 
 
@@ -109,7 +129,10 @@ class InfoPage extends Component {
     // 10.100.100.198:3000
 
     socket.emit('new user', this.props.user.userName);
-  }
+
+    
+
+  } // end didMount
 
   componentDidUpdate() {
     if (!this.props.user.isLoading && this.props.user.userName === null) {
@@ -173,6 +196,11 @@ class InfoPage extends Component {
     if (this.props.user.userName) {
       content = (
         <div className="infoContainer">
+
+          <canvas ref="infoCanvas"
+            className="canvasActual"
+            width="600" height="450">
+          </canvas>
           <p>
             Chat Page
           </p>
@@ -236,7 +264,7 @@ class InfoPage extends Component {
 
     return (
       <div>
-        <Nav />
+        <Nav id="content" />
         {content}
       </div>
     );

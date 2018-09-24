@@ -3,6 +3,23 @@
     z-index: 1;
 }
 
+.canvasActual {
+    top:0;
+    left:0;
+    /* background-color: skyblue; */
+    
+    position: relative;
+
+    border: 2px black;
+    z-index: 1000;
+    
+}
+
+#content{
+    position: relative;
+    z-index: 1100;
+}
+
 .chatContainer{
     /* text-align: right; */
     /* float: right; */
@@ -15,6 +32,7 @@
     padding:20px;
     text-align: right;
     display: inline-block;
+    z-index: 1100;
 }
 /* 
 .others{
