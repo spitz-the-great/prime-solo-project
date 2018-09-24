@@ -8,6 +8,8 @@ import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
 import './InfoPage.css';
 
+
+
 // socket.io
 import socketIOClient from 'socket.io-client';
 const socket = socketIOClient('10.100.100.198:5000', { transports: ['websocket'] });

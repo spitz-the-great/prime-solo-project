@@ -34,7 +34,7 @@
     top: 0;
     margin: 20px;
     padding-top: 20px;
-    text-align: right;
+    text-align: left;
     /* display: inline-block; */
     z-index: 1100;
 }
@@ -77,5 +77,6 @@
 }
 .typingUser{
     position: fixed;
+    text-align: left;
 }
 
