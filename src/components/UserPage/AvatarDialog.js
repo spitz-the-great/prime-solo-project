@@ -16,6 +16,7 @@ import blue from '@material-ui/core/colors/blue';
 import classNames from 'classnames';
 
 import cat from '../../avatarImages/bullet_cat.jpg';
+import nyan from '../../avatarImages/nyan.png';
 
 const emails = ['username@gmail.com', 'user02@gmail.com'];
 
@@ -38,8 +39,13 @@ const styles = {
 };
 
 class SimpleDialog extends React.Component {
+    constructor(props) {
+        super(props)
+    }
+
     handleClose = () => {
         this.props.onClose(this.props.selectedValue);
+        
     };
 
     handleListItemClick = value => {
@@ -59,13 +65,16 @@ class SimpleDialog extends React.Component {
                                 <ListItemAvatar>
                                     <Avatar
                                         className={classNames(classes.avatar, classes.bigAvatar)} src={cat} >
-                                    {/* src={`${imageBaseURL}${item.image}`} */}
+                                        {/* src={`${imageBaseURL}${item.image}`} */}
                                     </Avatar>
                                 </ListItemAvatar>
                                 <ListItemText primary={avatar} />
                             </ListItem>
                         ))}
-                        
+
+
+
+
                     </List>
                 </div>
             </Dialog>
@@ -87,6 +96,11 @@ class SimpleDialogDemo extends React.Component {
         selectedValue: avatarList[1],
     };
 
+    enterChatPage = () => {
+        console.log('in enterChatPage');
+        this.props.history.push('info');
+    }
+
     handleClickOpen = () => {
         this.setState({
             open: true,
@@ -95,6 +109,8 @@ class SimpleDialogDemo extends React.Component {
 
     handleClose = value => {
         this.setState({ selectedValue: value, open: false });
+        console.log('in handleClose');
+        this.enterChatPage(); 
     };
 
     render() {

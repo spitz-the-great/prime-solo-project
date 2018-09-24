@@ -43,6 +43,8 @@ class UserPage extends Component {
         imgPath: '',
       }
     }
+
+    this.enterChatPage = this.enterChatPage.bind(this);
   }
     
 
@@ -92,7 +94,7 @@ class UserPage extends Component {
             Join Main Chat
           </button>
 
-          <SimpleDialogDemo />
+          <SimpleDialogDemo history={this.props.history} enterChatPage={this.enterChatPage} />
           <ul>Others Online:
             <br />
             
