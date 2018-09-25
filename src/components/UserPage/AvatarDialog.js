@@ -126,8 +126,6 @@ class SimpleDialogDemo extends React.Component {
         this.setState({ selectedValue: value, open: false });
         console.log('in handleClose');
         this.updateAvatar(this.props.userId, value);
-
-
         
         this.props.history.push('info');
         // this.enterChatPage();

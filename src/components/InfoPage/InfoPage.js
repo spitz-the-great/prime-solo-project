@@ -20,6 +20,48 @@ const mapStateToProps = state => ({
   user: state.user,
 });
 
+// >>>>>>>>>>>> matter.js start
+    // module aliases
+    var Engine = Matter.Engine,
+      Render = Matter.Render,
+      World = Matter.World,
+      Bodies = Matter.Bodies;
+
+    // create an engine
+    var engine = Engine.create();
+
+    // create a renderer
+    // var render = Render.create( {
+    //   // element: document.body,
+    //   // element: canvas, << breaks everything
+    //   element: this.canvasRef.current, // << makes container appear at 0 height
+    //   engine: engine,
+    //   options:{
+    //   // width: window.innerWidth,
+    //   // height: window.innerHeight,
+
+    //   width: 1000, 
+    //   height: 1000,
+
+    //   }
+    //   // background: ,
+    //   // canvas: myCanvas,
+    // });
+
+    // create two boxes and a ground
+    var boxA = Bodies.rectangle(400, 200, 80, 80);
+    var boxB = Bodies.rectangle(450, 50, 80, 80);
+    var ground = Bodies.rectangle(400, 610, 810, 60, { isStatic: true });
+
+    // add all of the bodies to the world
+    World.add(engine.world, [boxA, boxB, ground]);
+
+    // run the engine
+    // Engine.run(engine);
+
+    // // run the renderer
+    // Render.run(render);
+
 class InfoPage extends Component {
   constructor() {
     super()
@@ -35,15 +77,6 @@ class InfoPage extends Component {
     }
 
     this.canvasRef = React.createRef();
-
-    
-
-    // this.setTextInputRef = element => {
-    //   this.canvasRef = element;
-    // };
-
-
-    
 
     socket.on('change color', (col) => {
       document.body.style.backgroundColor = col
@@ -81,47 +114,47 @@ class InfoPage extends Component {
     //     canvas.height = window.innerHeight;
     // });
 
-    // >>>>>>>>>>>> matter.js start
-    // module aliases
-    var Engine = Matter.Engine,
-      Render = Matter.Render,
-      World = Matter.World,
-      Bodies = Matter.Bodies;
+    // // >>>>>>>>>>>> matter.js start
+    // // module aliases
+    // var Engine = Matter.Engine,
+    //   Render = Matter.Render,
+    //   World = Matter.World,
+    //   Bodies = Matter.Bodies;
 
-    // create an engine
-    var engine = Engine.create();
+    // // create an engine
+    // var engine = Engine.create();
 
-    // create a renderer
-    var render = Render.create( {
-      // element: document.body,
-      // element: canvas, << breaks everything
-      element: this.canvasRef.current, // << makes container appear at 0 height
-      engine: engine,
-      options:{
-      // width: window.innerWidth,
-      // height: window.innerHeight,
+    // // create a renderer
+    // var render = Render.create( {
+    //   // element: document.body,
+    //   // element: canvas, << breaks everything
+    //   element: this.canvasRef.current, // << makes container appear at 0 height
+    //   engine: engine,
+    //   options:{
+    //   // width: window.innerWidth,
+    //   // height: window.innerHeight,
 
-      width: 1000, 
-      height: 1000,
+    //   width: 1000, 
+    //   height: 1000,
 
-      }
-      // background: ,
-      // canvas: myCanvas,
-    });
+    //   }
+    //   // background: ,
+    //   // canvas: myCanvas,
+    // });
 
-    // create two boxes and a ground
-    var boxA = Bodies.rectangle(400, 200, 80, 80);
-    var boxB = Bodies.rectangle(450, 50, 80, 80);
-    var ground = Bodies.rectangle(400, 610, 810, 60, { isStatic: true });
+    // // create two boxes and a ground
+    // var boxA = Bodies.rectangle(400, 200, 80, 80);
+    // var boxB = Bodies.rectangle(450, 50, 80, 80);
+    // var ground = Bodies.rectangle(400, 610, 810, 60, { isStatic: true });
 
-    // add all of the bodies to the world
-    World.add(engine.world, [boxA, boxB, ground]);
+    // // add all of the bodies to the world
+    // World.add(engine.world, [boxA, boxB, ground]);
 
-    // run the engine
-    Engine.run(engine);
+    // // run the engine
+    // Engine.run(engine);
 
-    // run the renderer
-    Render.run(render);
+    // // run the renderer
+    // Render.run(render);
 
     // >>>>>>>>>>>> matter.js end
   } // end constructor
@@ -145,6 +178,27 @@ class InfoPage extends Component {
     //192.168.1.5
     // http://localhost:3000
     // 10.100.100.198:3000
+    
+    var render = Render.create( {
+      // element: document.body,
+      // element: canvas, << breaks everything
+      element: this.canvasRef.current, // << makes container appear at 0 height
+      engine: engine,
+      options:{
+      // width: window.innerWidth,
+      // height: window.innerHeight,
+
+      width: 1000, 
+      height: 1000,
+
+      }
+      // background: ,
+      // canvas: myCanvas,
+    });
+    Engine.run(engine);
+
+    // run the renderer
+    Render.run(render);
     
 
     socket.emit('new user', this.props.user.userName);
