@@ -9,7 +9,6 @@ import Grid from '@material-ui/core/Grid';
 import './InfoPage.css';
 
 
-
 // socket.io
 import socketIOClient from 'socket.io-client';
 const socket = socketIOClient('10.100.100.198:5000', { transports: ['websocket'] });
@@ -72,7 +71,8 @@ class InfoPage extends Component {
       messagesList: [],
       userList: [],
       numberOfUsers: '',
-      typingUser: ''
+      typingUser: '',
+      // canvasRef: React.createRef(),
 
     }
 
@@ -178,27 +178,27 @@ class InfoPage extends Component {
     //192.168.1.5
     // http://localhost:3000
     // 10.100.100.198:3000
-    
-    var render = Render.create( {
-      // element: document.body,
-      // element: canvas, << breaks everything
-      element: this.canvasRef.current, // << makes container appear at 0 height
-      engine: engine,
-      options:{
-      // width: window.innerWidth,
-      // height: window.innerHeight,
 
-      width: 1000, 
-      height: 1000,
+    // var render = Render.create( {
+    //   // element: document.body,
+    //   // element: canvas, << breaks everything
+    //   element: this.canvasRef.current, // << makes container appear at 0 height
+    //   engine: engine,
+    //   options:{
+    //   // width: window.innerWidth,
+    //   // height: window.innerHeight,
 
-      }
-      // background: ,
-      // canvas: myCanvas,
-    });
-    Engine.run(engine);
+    //   width: 1000, 
+    //   height: 1000,
 
-    // run the renderer
-    Render.run(render);
+    //   }
+    //   // background: ,
+    //   // canvas: myCanvas,
+    // });
+    // Engine.run(engine);
+
+    // // run the renderer
+    // Render.run(render);
     
 
     socket.emit('new user', this.props.user.userName);
@@ -270,6 +270,25 @@ class InfoPage extends Component {
 
   render() {
     let content = null;
+       var render = Render.create( {
+      // element: document.body,
+      // element: canvas, << breaks everything
+      element: this.canvasRef.current, // << makes container appear at 0 height
+      engine: engine,
+      options:{
+      // width: window.innerWidth,
+      // height: window.innerHeight,
+
+      width: 1400, 
+      height: 1000,
+
+      }
+      
+    });
+    Engine.run(engine);
+
+    // run the renderer
+    Render.run(render);
 
     const node = this.canvasRef.current;
 
@@ -289,6 +308,7 @@ class InfoPage extends Component {
             Chat Page
           </p>
           <Grid
+          // className="content"
             container
             direction="column"
             justify="flex-start"

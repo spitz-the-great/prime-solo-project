@@ -105,6 +105,17 @@ router.delete('/delete/:id', (req, res) => {
         });
 });
 
+router.post('/addProfile', (req, res) => {
+    console.log('req: ', req.body);
+    
+    const userId = req.user.id;
+    
+  
+    const queryText = 'INSERT INTO user_profile (user_id) VALUES ($1)';
+    pool.query(queryText, [userId])
+      .then(() => { res.sendStatus(201); })
+      .catch((err) => { next(err); });
+  });
 // router.delete('/:id', function(req, res) {
 //     const id = req.params.id;
 //     console.log('id to delete: ', id);

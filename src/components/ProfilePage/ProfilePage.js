@@ -6,6 +6,7 @@ import axios from 'axios';
 import Nav from '../../components/Nav/Nav';
 
 import { USER_ACTIONS } from '../../redux/actions/userActions';
+import { triggerLogout } from '../../redux/actions/loginActions';
 
 const mapStateToProps = state => ({
     user: state.user,
@@ -65,7 +66,9 @@ class ProfilePage extends Component {
                 console.log(error);
             });
     }
-
+    logout = () => {
+        this.props.dispatch(triggerLogout());
+      }
     // click handler for "delete user" button
     deleteUser = () => {
         console.log('in delete user, user: ', this.props.user.id);
@@ -77,6 +80,7 @@ class ProfilePage extends Component {
                 console.log('deleted user', response);
             }
         })
+        this.logout();
     } // end deleteUser
 
     //// end db calls ^^^
