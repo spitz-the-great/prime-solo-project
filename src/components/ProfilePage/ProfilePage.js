@@ -130,13 +130,14 @@ class ProfilePage extends Component {
         let content = null;
         // let setting = this.props.profile[0].privacy_setting;
 
-        if (this.props.user.userName) {
+        if (this.props.user.userName && this.props.profile[0] ) {
             content = (
                 <div>
                     <p>Manage Profile</p>
                     <div>{this.props.profile[0].privacy_setting &&
                         <p>Current privacy setting: {this.props.profile[0].privacy_setting}</p>
                     }</div>
+                    
                     {/* <div>{this.state.privacySetting}</div> */}
 
                     {/* <div>{setting &&
@@ -162,6 +163,9 @@ class ProfilePage extends Component {
                     <button onClick={this.setPrivate}>Set To Private</button>
                     <button onClick={this.setPublic}>Set To Public</button>
                     <br /><br />
+
+                    {/* <div className='delete-button' onClick={() => { if (window.confirm('Are you sure you wish to delete this item?')) this.onCancel(item) } } /> */}
+
                     <button onClick={this.deleteUser}>Delete Account</button>
 
                 </div>
