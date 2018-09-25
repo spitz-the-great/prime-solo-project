@@ -3,6 +3,10 @@ import { connect } from 'react-redux';
 import Matter from "matter-js";
 import Nav from '../../components/Nav/Nav';
 import { USER_ACTIONS } from '../../redux/actions/userActions';
+
+import PhysicsPage from './PhysicsPage.js';
+
+// material/css imports
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
@@ -285,10 +289,10 @@ class InfoPage extends Component {
       }
       
     });
-    Engine.run(engine);
+    // Engine.run(engine);
 
-    // run the renderer
-    Render.run(render);
+    // // run the renderer
+    // Render.run(render);
 
     const node = this.canvasRef.current;
 
@@ -296,7 +300,7 @@ class InfoPage extends Component {
       content = (
         <div className="infoContainer">
 
-<div ref={this.canvasRef} className="canvasActual"></div>
+{/* <div ref={this.canvasRef} className="canvasActual"></div> */}
 
 
           {/* <canvas id="canvas"
@@ -369,6 +373,7 @@ class InfoPage extends Component {
             <button id="red" onClick={() => this.setColor('red')}>Red</button>
             <button id="blue" onClick={() => this.setColor('blue')}>Blue</button>
           </div>
+          {/* <PhysicsPage /> */}
 
         </div>
       );
@@ -378,6 +383,7 @@ class InfoPage extends Component {
       <div>
         <Nav id="content" />
         {content}
+        <PhysicsPage />
       </div>
     );
   }

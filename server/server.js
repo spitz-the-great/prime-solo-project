@@ -45,7 +45,8 @@ let connectedUsers = [];
 io.on('connection', socket => {
   console.log('User connected');
 
-  
+  numberOfUsers++;
+  console.log(numberOfUsers);
 
   socket.on('change color', (color) => {
     console.log('Color Changed to: ', color)
@@ -77,7 +78,7 @@ io.on('connection', socket => {
   //update connected user list
   socket.on('new user', (username) => {
     console.log('new user: ', username);
-    numberOfUsers++;
+  
     socket.userName = username;
 
     check = connectedUsers.includes(socket.userName);
