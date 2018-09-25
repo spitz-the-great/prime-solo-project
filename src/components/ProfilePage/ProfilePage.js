@@ -8,6 +8,7 @@ import Nav from '../../components/Nav/Nav';
 import { USER_ACTIONS } from '../../redux/actions/userActions';
 import { triggerLogout } from '../../redux/actions/loginActions';
 
+
 const mapStateToProps = state => ({
     user: state.user,
     profile: state.profileReducer
@@ -166,7 +167,7 @@ class ProfilePage extends Component {
 
         return (
             <div>
-                <Header title="Multiplayer Chat App" />
+                <Header className="Header" title="Multiplayer Chat App" />
                 <Nav />
                 {content}
             </div>
