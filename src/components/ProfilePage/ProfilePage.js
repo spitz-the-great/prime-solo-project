@@ -21,7 +21,6 @@ class ProfilePage extends Component {
             privacySetting: '',
             searchName: '',
             foundUserName: '',
-            // profileList: this.props.profile[0].profileReducer,
         }
     } // end constructor
 
@@ -71,6 +70,11 @@ class ProfilePage extends Component {
       }
     // click handler for "delete user" button
     deleteUser = () => {
+
+        const response = window.confirm(`This will delete your user name, password, your friends. 
+        It's game over, man. Ya done. Finito. 
+        Do you want to delete all the things?`); if(response == true){
+
         console.log('in delete user, user: ', this.props.user.id);
         let id = this.props.user.id;
         axios({
@@ -79,18 +83,16 @@ class ProfilePage extends Component {
             success: function (response) {
                 console.log('deleted user', response);
             }
-        })
+        });
         this.logout();
-    } // end deleteUser
+    }} // end deleteUser
 
     //// end db calls ^^^
 
     componentDidMount() {
         this.props.dispatch({ type: USER_ACTIONS.FETCH_USER });
         this.getProfile();
-        // this.setState({
-        //     privacy_setting: this.props.profile[0].privacy_setting
-        // })
+      
     }
 
     componentDidUpdate() {
@@ -123,12 +125,8 @@ class ProfilePage extends Component {
     }
 
     render() {
-        // let location =  this.props.location;
-        // let location = window.location.href;
-        // let passUrl = location.substr(24, 7);
-
+       
         let content = null;
-        // let setting = this.props.profile[0].privacy_setting;
 
         if (this.props.user.userName && this.props.profile[0] ) {
             content = (
@@ -137,12 +135,6 @@ class ProfilePage extends Component {
                     <div>{this.props.profile[0].privacy_setting &&
                         <p>Current privacy setting: {this.props.profile[0].privacy_setting}</p>
                     }</div>
-                    
-                    {/* <div>{this.state.privacySetting}</div> */}
-
-                    {/* <div>{setting &&
-                    <p>Current privacy setting: {setting}</p>
-                     } </div> */}
                     <br />
 
                     <br />
