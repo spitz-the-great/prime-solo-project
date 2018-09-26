@@ -64,7 +64,6 @@ World.add(engine.world, [boxA, boxB, avatar, ground]);
 // // run the renderer
 // Render.run(render);
 
-
 class PhysicsPage extends Component {
 
     constructor() {
@@ -74,6 +73,7 @@ class PhysicsPage extends Component {
 
     componentDidMount() {
         this.props.dispatch({ type: USER_ACTIONS.FETCH_USER });
+
         // // run the renderer
         Render.run(render);
         // run the engine
@@ -95,12 +95,10 @@ class PhysicsPage extends Component {
     render() {
         return (
             <div id="phys">
-             
+{this.props.avatar}
             </div>
         )
-
     }
-
 
 }
 

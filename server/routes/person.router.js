@@ -29,12 +29,24 @@ router.get('/profile', (req, res) => {
 
 router.get('/getAvatar', (req, res) => {
     console.log('in get avatar');
+    userId = req.user.id;
     if (req.isAuthenticated()) {
-        const avatarQuery = `SELECT "avatar"
+        const getAvatarQuery = `SELECT "avatar"
                             FROM "user_profile"
-                            WHERE "per`
+                            WHERE "user_id"=$1;`;
+        pool.query(getAvatarQuery, [userId])
+            .then((results) => {
+                res.send(results.rows[0]);
+                console.log('successful get avatar', results.rows[0])
+            }).catch((error) => {
+                console.log('Error getting avatar', error);
+                res.sendStatus(500);
+            });
+    } else {
+        res.sendStatus(403);
+
     }
-})
+});
 
 router.get('/search/:name', (req, res) => {
     // const searchName = req.body;

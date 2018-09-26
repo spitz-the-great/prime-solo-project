@@ -35,6 +35,8 @@ class InfoPage extends Component {
       userList: [],
       numberOfUsers: '',
       typingUser: '',
+      avatar: '',
+      avatarPath: '',
       // canvasRef: React.createRef(),
 
     }
@@ -80,6 +82,7 @@ class InfoPage extends Component {
     // 10.100.100.198:3000
 
     socket.emit('new user', this.props.user.userName);
+    this.getUserAvatar();
 
   } // end didMount
 
@@ -87,6 +90,7 @@ class InfoPage extends Component {
     if (!this.props.user.isLoading && this.props.user.userName === null) {
       this.props.history.push('home');
       // socket.emit('new user', this.props.user.userName);
+    
     }
   }
 
@@ -115,9 +119,9 @@ class InfoPage extends Component {
     this.updateTypingStatus('');
     console.log(data);
     this.setState({
-      newMessage:'',
+      newMessage: '',
     })
-    
+
   }
 
   updateMessageList = (data) => {
@@ -148,22 +152,31 @@ class InfoPage extends Component {
     axios({
       method: 'GET',
       url: 'api/person/getAvatar'
+    }).then((results) => {
+      console.log('avatar results: ', results)
+      this.setState({
+        avatar: results.data.avatar
+      })
+    }).catch((error) => {
+      console.log('Error getting count', error);
     })
   }
 
   render() {
     let content = null;
-  
+    let avatar = this.state.avatar;
+
     if (this.props.user.userName) {
       content = (
 
         <div className="infoContainer">
-        {/* <PhysicsPage className="physicsCanvas" /> */}
+          {/* <PhysicsPage className="physicsCanvas" /> */}
           <p>
-            Chat Page
+            Chat Page {avatar} 
           </p>
+          
           <Grid
-          // className="content"
+            // className="content"
             container
             direction="column"
             justify="flex-start"
@@ -192,7 +205,7 @@ class InfoPage extends Component {
 
               <h4>General Chat:</h4>
               <div>
-                <form className="chatForm"onSubmit={this.newMessageClick}>
+                <form className="chatForm" onSubmit={this.newMessageClick}>
                   <TextField
                     id="chatInput"
                     variant="outlined"
@@ -215,7 +228,7 @@ class InfoPage extends Component {
               </div>
             </div>
             {/* end chatContainer div */}
-            </Grid>
+          </Grid>
           <br />
           <br />
 
@@ -233,7 +246,7 @@ class InfoPage extends Component {
       <div>
         <Nav id="content" />
         {content}
-        <PhysicsPage className="physicsCanvas" />
+        <PhysicsPage avatar={avatar}className="physicsCanvas" />
       </div>
     );
   }
