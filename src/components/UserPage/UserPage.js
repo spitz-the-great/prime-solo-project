@@ -37,7 +37,7 @@ class UserPage extends Component {
 
   constructor(props){
     super(props)
-    this.setPrivacy();
+    
     this.state = {
       selectedAvatar: {
         name: '',
@@ -47,19 +47,8 @@ class UserPage extends Component {
 
     this.enterChatPage = this.enterChatPage.bind(this);
   }
-    setPrivacy = () =>{
-      axios({
-        method: 'POST',
-        url: '/api/person/addProfile/',
-        
-        success: function (response) {
-            console.log('add profile response: ', response)
-        }
-    });
-    }
+ 
     
-  
-
   componentDidMount() {
     this.props.dispatch({ type: USER_ACTIONS.FETCH_USER });
   }

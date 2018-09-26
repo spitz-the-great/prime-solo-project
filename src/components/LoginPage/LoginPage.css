@@ -13,7 +13,8 @@
     top:0;
     left:0;
     /* background-color: skyblue; */
-    
+    height: 100%;
+    width: 100%;
     position: relative;
 
     border: 2px black;
@@ -50,7 +51,7 @@
 
 
 #bg{
-    /* display: none; */
+    display: none;
     z-index: 1000;
     position: absolute;
 }

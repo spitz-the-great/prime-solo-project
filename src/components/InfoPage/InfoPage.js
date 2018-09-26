@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import Matter from "matter-js";
+import axios from 'axios';
+
 import Nav from '../../components/Nav/Nav';
 import { USER_ACTIONS } from '../../redux/actions/userActions';
 
@@ -23,48 +24,6 @@ const mapStateToProps = state => ({
   user: state.user,
 });
 
-// >>>>>>>>>>>> matter.js start
-    // module aliases
-    var Engine = Matter.Engine,
-      Render = Matter.Render,
-      World = Matter.World,
-      Bodies = Matter.Bodies;
-
-    // create an engine
-    var engine = Engine.create();
-
-    // create a renderer
-    // var render = Render.create( {
-    //   // element: document.body,
-    //   // element: canvas, << breaks everything
-    //   element: this.canvasRef.current, // << makes container appear at 0 height
-    //   engine: engine,
-    //   options:{
-    //   // width: window.innerWidth,
-    //   // height: window.innerHeight,
-
-    //   width: 1000, 
-    //   height: 1000,
-
-    //   }
-    //   // background: ,
-    //   // canvas: myCanvas,
-    // });
-
-    // create two boxes and a ground
-    var boxA = Bodies.rectangle(400, 200, 80, 80);
-    var boxB = Bodies.rectangle(450, 50, 80, 80);
-    var ground = Bodies.rectangle(400, 610, 810, 60, { isStatic: true });
-
-    // add all of the bodies to the world
-    World.add(engine.world, [boxA, boxB, ground]);
-
-    // run the engine
-    // Engine.run(engine);
-
-    // // run the renderer
-    // Render.run(render);
-
 class InfoPage extends Component {
   constructor() {
     super()
@@ -79,8 +38,6 @@ class InfoPage extends Component {
       // canvasRef: React.createRef(),
 
     }
-
-    this.canvasRef = React.createRef();
 
     socket.on('change color', (col) => {
       document.body.style.backgroundColor = col
@@ -104,68 +61,7 @@ class InfoPage extends Component {
       this.updateTypingStatus('');
     })
 
-
-    const canvas = this.refs.infoCanvas;
-    // const ctx = canvas.getContext("2d");
-    // ctx.canvas.width = window.innerWidth;
-    // ctx.canvas.height = window.innerHeight;
-
-    // this.canvas.width = window.innerWidth;
-    // this.canvas.height = window.innerHeight;
-
-    // window.addEventListener("resize", function(){
-    //     canvas.width = window.innerWidth;
-    //     canvas.height = window.innerHeight;
-    // });
-
-    // // >>>>>>>>>>>> matter.js start
-    // // module aliases
-    // var Engine = Matter.Engine,
-    //   Render = Matter.Render,
-    //   World = Matter.World,
-    //   Bodies = Matter.Bodies;
-
-    // // create an engine
-    // var engine = Engine.create();
-
-    // // create a renderer
-    // var render = Render.create( {
-    //   // element: document.body,
-    //   // element: canvas, << breaks everything
-    //   element: this.canvasRef.current, // << makes container appear at 0 height
-    //   engine: engine,
-    //   options:{
-    //   // width: window.innerWidth,
-    //   // height: window.innerHeight,
-
-    //   width: 1000, 
-    //   height: 1000,
-
-    //   }
-    //   // background: ,
-    //   // canvas: myCanvas,
-    // });
-
-    // // create two boxes and a ground
-    // var boxA = Bodies.rectangle(400, 200, 80, 80);
-    // var boxB = Bodies.rectangle(450, 50, 80, 80);
-    // var ground = Bodies.rectangle(400, 610, 810, 60, { isStatic: true });
-
-    // // add all of the bodies to the world
-    // World.add(engine.world, [boxA, boxB, ground]);
-
-    // // run the engine
-    // Engine.run(engine);
-
-    // // run the renderer
-    // Render.run(render);
-
-    // >>>>>>>>>>>> matter.js end
   } // end constructor
-
- // create function outside constructor that contains all the matter stuff and call on didMount
-
-
 
   send = () => {
     socket.emit('change color', this.state.color)
@@ -183,31 +79,7 @@ class InfoPage extends Component {
     // http://localhost:3000
     // 10.100.100.198:3000
 
-    // var render = Render.create( {
-    //   // element: document.body,
-    //   // element: canvas, << breaks everything
-    //   element: this.canvasRef.current, // << makes container appear at 0 height
-    //   engine: engine,
-    //   options:{
-    //   // width: window.innerWidth,
-    //   // height: window.innerHeight,
-
-    //   width: 1000, 
-    //   height: 1000,
-
-    //   }
-    //   // background: ,
-    //   // canvas: myCanvas,
-    // });
-    // Engine.run(engine);
-
-    // // run the renderer
-    // Render.run(render);
-    
-
     socket.emit('new user', this.props.user.userName);
-
-
 
   } // end didMount
 
@@ -246,7 +118,6 @@ class InfoPage extends Component {
       newMessage:'',
     })
     
-
   }
 
   updateMessageList = (data) => {
@@ -272,42 +143,22 @@ class InfoPage extends Component {
     this.isTyping();
   }
 
+  getUserAvatar = () => {
+    console.log('in get avatar');
+    axios({
+      method: 'GET',
+      url: 'api/person/getAvatar'
+    })
+  }
+
   render() {
     let content = null;
-       var render = Render.create( {
-      // element: document.body,
-      // element: canvas, << breaks everything
-      element: this.canvasRef.current, // << makes container appear at 0 height
-      engine: engine,
-      options:{
-      // width: window.innerWidth,
-      // height: window.innerHeight,
-
-      width: 1400, 
-      height: 1000,
-
-      }
-      
-    });
-    // Engine.run(engine);
-
-    // // run the renderer
-    // Render.run(render);
-
-    const node = this.canvasRef.current;
-
+  
     if (this.props.user.userName) {
       content = (
+
         <div className="infoContainer">
-
-{/* <div ref={this.canvasRef} className="canvasActual"></div> */}
-
-
-          {/* <canvas id="canvas"
-          ref="infoCanvas"
-            className="canvasActual"
-            width="600" height="450">
-          </canvas> */}
+        {/* <PhysicsPage className="physicsCanvas" /> */}
           <p>
             Chat Page
           </p>
@@ -373,7 +224,6 @@ class InfoPage extends Component {
             <button id="red" onClick={() => this.setColor('red')}>Red</button>
             <button id="blue" onClick={() => this.setColor('blue')}>Blue</button>
           </div>
-          {/* <PhysicsPage /> */}
 
         </div>
       );
@@ -383,7 +233,7 @@ class InfoPage extends Component {
       <div>
         <Nav id="content" />
         {content}
-        <PhysicsPage />
+        <PhysicsPage className="physicsCanvas" />
       </div>
     );
   }

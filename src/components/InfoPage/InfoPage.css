@@ -1,13 +1,13 @@
 .infoContainer{
     position: relative;
-    z-index: 1;
+    z-index: 10;
 }
 
 #connectedUsers{
     text-align: right;
 }
 
-.canvasActual {
+.physicsCanvas {
     top:0;
     left:0;
     /* background-color: skyblue; */
@@ -15,20 +15,20 @@
     position: relative;
     height: 100%;
     width: 100%;
-    border: 2px black;
-    z-index: 1000;
+    /* border: 2px black; */
+    z-index: 1;
     
 }
 
 #content{
-    position: relative;
+    position: absolute;
     z-index: 1100;
 }
 
 .chatContainer{
     /* text-align: right; */
     /* float: right; */
-    position: fixed;
+    position: absolute;
     width: 200px;
     z-index: 1000;
     right: 0;

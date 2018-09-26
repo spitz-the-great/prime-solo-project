@@ -23,7 +23,13 @@ router.post('/register', (req, res, next) => {
 
   const queryText = 'INSERT INTO person (username, password) VALUES ($1, $2) RETURNING id';
   pool.query(queryText, [username, password])
-    .then(() => { res.sendStatus(201); })
+    .then((response) => {
+      console.log(response);
+      const queryText = 'INSERT INTO user_profile (user_id) VALUES ($1)';
+      pool.query(queryText, [ response.rows[0].id ])
+          .then(() => { res.sendStatus(201); })
+          .catch((err) => { next(err); });
+      })
     .catch((err) => { next(err); });
 });
 

@@ -27,6 +27,15 @@ router.get('/profile', (req, res) => {
     }
 });
 
+router.get('/getAvatar', (req, res) => {
+    console.log('in get avatar');
+    if (req.isAuthenticated()) {
+        const avatarQuery = `SELECT "avatar"
+                            FROM "user_profile"
+                            WHERE "per`
+    }
+})
+
 router.get('/search/:name', (req, res) => {
     // const searchName = req.body;
     const searchName = req.params.name;
@@ -89,7 +98,7 @@ router.put('/avatar/:id', (req, res) => {
 });
 
 router.delete('/delete/:id', (req, res) => {
-    
+
     const id = req.params.id;
     console.log('id to delete: ', id);
     const deleteQuery = `DELETE FROM person
@@ -105,17 +114,7 @@ router.delete('/delete/:id', (req, res) => {
         });
 });
 
-router.post('/addProfile', (req, res) => {
-    console.log('req: ', req.body);
-    
-    const userId = req.user.id;
-    
-  
-    const queryText = 'INSERT INTO user_profile (user_id) VALUES ($1)';
-    pool.query(queryText, [userId])
-      .then(() => { res.sendStatus(201); })
-      .catch((err) => { next(err); });
-  });
+
 // router.delete('/:id', function(req, res) {
 //     const id = req.params.id;
 //     console.log('id to delete: ', id);
