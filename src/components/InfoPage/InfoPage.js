@@ -333,11 +333,15 @@ class InfoPage extends Component {
           <p>
             Chat Page {avatar}
           </p>
-          <ChatAvatars avatar={avatar} path={path}/>
+          {/* <ChatAvatars avatar={avatar} path={path}/> */}
 
           {/* conditional render more <ChatAvatars/> based on length of this.state.userList */}
-          {/* this.state.usersData.map((user, i) => {
-            <ChatAvatars avatar={user.avatar} path={user.path}/> */}
+          <div>
+          {this.state.usersData.map((user, i) => {
+            return(
+            <ChatAvatars avatar={user.avatar} path={user.path}/>
+          )})
+          }</div>
           <Grid
             // className="content"
             container
