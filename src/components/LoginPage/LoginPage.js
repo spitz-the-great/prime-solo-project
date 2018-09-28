@@ -56,13 +56,23 @@ class LoginPage extends Component {
     ctx.fillRect(0, 0, 100, 100);
 
 
-    ctx.drawImage(bgImage, 0, 0);
+    // ctx.drawImage(bgImage, 0, 0); works
+
+    ctx.drawImage(bgImage, 0, 0, bgImage.width,    bgImage.height,     // source rectangle
+      0, 0, canvas.width, canvas.height);
 
     bgImage.onload = () => {
       console.log('in onload');
-     ctx.drawImage(bgImage, 0, 0);
+      // stretch image to fill canvas size
+      ctx.drawImage(bgImage, 0, 0, bgImage.width,    bgImage.height,     // source rectangle
+        0, 0, canvas.width, canvas.height);
+    //  ctx.drawImage(bgImage, 0, 0); works
     }
   
+    // ctx.drawImage(bgImage, 0, 0, bgImage.width,    bgImage.height,     // source rectangle
+    //   0, 0, canvas.width, canvas.height);
+
+
   }
 
 

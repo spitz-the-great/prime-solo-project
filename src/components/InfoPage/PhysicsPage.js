@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Matter from "matter-js";
+import axios from 'axios';
 
 import { USER_ACTIONS } from '../../redux/actions/userActions';
 
@@ -66,9 +67,15 @@ World.add(engine.world, [boxA, boxB, avatar, ground]);
 
 class PhysicsPage extends Component {
 
-    constructor() {
-        super()
 
+
+    constructor(props) {
+        super(props)
+        this.state = {
+            avatarFromDb: '',
+            pathFromDb: '',
+        }
+        // this.getAvatarPath();
     }
 
     componentDidMount() {
@@ -78,6 +85,8 @@ class PhysicsPage extends Component {
         Render.run(render);
         // run the engine
         Engine.run(engine);
+
+        // this.getAvatarPath(this.props.avatar);
     }
 
     componentWillUnmount() {
@@ -92,10 +101,31 @@ class PhysicsPage extends Component {
         // render.context = null;
         // render.textures = {};
     }
-    render() {
+
+
+    getAvatar = () => {
+        console.log('in get avatar');
+        axios({
+          method: 'GET',
+          url: 'api/person/getAvatar'
+        }).then((results) => {
+          console.log('avatar results: ', results)
+          this.setState({
+            avatarFromDb: results.data.avatar,
+            pathFromDb: results.data.path
+          })
+        }).catch((error) => {
+          console.log('Error getting count', error);
+        })
+      } // need to write sql that joins profile and avatar tables and gets both avatar name and path
+      //  ON profile avatar WHERE user_profile.avatar = avatar.name
+      // WHERE req.user.id matches profile id,
+    render(){
+        let path = this.state.path;
         return (
             <div id="phys">
-{this.props.avatar}
+                {this.props.avatar}
+                {path}
             </div>
         )
     }

@@ -246,7 +246,7 @@ class InfoPage extends Component {
       <div>
         <Nav id="content" />
         {content}
-        <PhysicsPage avatar={avatar}className="physicsCanvas" />
+        <PhysicsPage avatar={avatar} className="physicsCanvas" />
       </div>
     );
   }

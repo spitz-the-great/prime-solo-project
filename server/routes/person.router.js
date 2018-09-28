@@ -31,13 +31,16 @@ router.get('/getAvatar', (req, res) => {
     console.log('in get avatar');
     userId = req.user.id;
     if (req.isAuthenticated()) {
-        const getAvatarQuery = `SELECT "avatar"
-                            FROM "user_profile"
-                            WHERE "user_id"=$1;`;
+        const getAvatarQuery = 
+        `SELECT "user_profile"."avatar", "avatars"."image_path"
+        FROM "user_profile"
+        JOIN "avatars"
+        ON "user_profile"."avatar" = "avatars"."name"
+        WHERE "user_profile"."user_id" =$1;`;
         pool.query(getAvatarQuery, [userId])
             .then((results) => {
-                res.send(results.rows[0]);
-                console.log('successful get avatar', results.rows[0])
+                res.send(results.rows);
+                console.log('successful get avatar', results.rows)
             }).catch((error) => {
                 console.log('Error getting avatar', error);
                 res.sendStatus(500);

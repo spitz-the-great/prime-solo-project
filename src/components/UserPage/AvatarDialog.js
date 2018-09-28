@@ -25,8 +25,8 @@ import classNames from 'classnames';
 const emails = ['username@gmail.com', 'user02@gmail.com'];
 
 const avatarList = [
-    { name: 'hoverCat', imgPath: 'avatars/bullet_cat.jpg' },
-    { name: 'nyanCat', imgPath: 'avatars/nyan.png' },
+    { name: 'Hover Cat', imgPath: 'avatars/bullet_cat.jpg' },
+    { name: 'Nyan Cat', imgPath: 'avatars/nyan.png' },
 ]
 
 const styles = {
