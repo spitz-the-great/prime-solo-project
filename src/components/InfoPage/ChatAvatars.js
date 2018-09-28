@@ -13,8 +13,8 @@ const styles = {
         margin: 10,
     },
     bigAvatar: {
-        width: 60,
-        height: 60,
+        width: 200,
+        height: 200,
     },
 };
 
@@ -31,7 +31,6 @@ class ChatAvatars extends React.Component {
             <div className={classes.row}>
 
                 <Avatar
-                    alt="Adelle Charles"
                     src={this.props.path}
                     className={classNames(classes.avatar, classes.bigAvatar)}
                 />

@@ -94,6 +94,14 @@ class InfoPage extends Component {
       avatarFromDb:'',
       pathFromDb: '',
 
+      usersData: [{
+        name: '',
+        avatar: '',
+        path: '',
+      }]
+    
+      
+
       // canvasRef: React.createRef(),
 
     }
@@ -185,6 +193,7 @@ class InfoPage extends Component {
     // 10.100.100.198:3000
 
     socket.emit('new user', this.props.user.userName);
+    
     this.getAvatarPath();
     // this.testCanvas = React.createRef();
 
@@ -347,6 +356,9 @@ class InfoPage extends Component {
           </p>
           <ChatAvatars avatar={avatar} path={path}/>
 
+          {/* conditional render more <ChatAvatars/> based on length of this.state.userList */}
+          {/* this.state.usersData.map((user, i) => {
+            <ChatAvatars avatar={user.avatar} path={user.path}/> */}
           <Grid
             // className="content"
             container
