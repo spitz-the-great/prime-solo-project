@@ -97,12 +97,23 @@ io.on('connection', socket => {
       connectedUsers.push(socket.userName);
     }
     let data = {
-      connectedUsers
+      connectedUsers,
+    
     }
 
     io.sockets.emit('update_connected_users', data);
+    // io.sockets.emit('update_users_data', usersData)
     console.log('connected users from server: ', connectedUsers);
   }); // end new user
+
+  socket.on('new_users_data', (username, avatar, path) =>{
+    let usersData = {
+      username,
+      avatar,
+      path,
+    }
+     io.sockets.emit('update_users_data', usersData)
+  });
 
   socket.on('is_typing', (username) => {
     console.log('in user is typing socket event', username);

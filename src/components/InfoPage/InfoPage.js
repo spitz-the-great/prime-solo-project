@@ -163,6 +163,11 @@ class InfoPage extends Component {
 
     socket.on('update_connected_users', (userList) => {
       this.updateUserList(userList.connectedUsers);
+  
+    })
+
+    socket.on('update_users_data', (usersData) =>{
+      this.updateUsersData(usersData);
     })
 
     socket.on('update_typing_status', (typingUser) => {
@@ -191,50 +196,13 @@ class InfoPage extends Component {
     //192.168.1.5
     // http://localhost:3000
     // 10.100.100.198:3000
+    this.getAvatarPath();
+   
+    // socket.emit('new user', this.props.user.userName);
 
     socket.emit('new user', this.props.user.userName);
-    
-    this.getAvatarPath();
-    // this.testCanvas = React.createRef();
 
-    const canvas = this.refs.testCanvas;
-
-    // canvas.onLoad = () =>{}
-
-
-    // const ctx = canvas.getContext("2d");
-    // ctx.canvas.width = window.innerWidth;
-    // ctx.canvas.height = window.innerHeight;
-    // ctx.fillRect(0, 0, 100, 100);
-
-
-    // ctx.canvas.width = window.innerWidth;
-    // ctx.canvas.height = window.innerHeight;
-    // ctx.fillRect(0, 0, 100, 100);
-    // let canvas = this.testCanvas.current();
-    // // ctx.Rect()
-    // var render = Render.create({
-    //   // element: phys,
-    //   // element: document.body,
-    //   element: canvas,
-    //   engine: engine,
-    //   options: {
-    //     width: window.innerWidth,
-    //     height: window.innerHeight,
-    //     background: 'transparent',
-    //     wireframes: false,
-    //     // width: 1000,
-    //     // height: 1000,
-
-    //   }
-    // });
-
-    // // // run the engine
-    // Engine.run(engine);
-
-    // // // run the renderer
-    // Render.run(render);
-
+    // const canvas = this.refs.testCanvas;
 
   } // end didMount
 
@@ -287,7 +255,17 @@ class InfoPage extends Component {
     if (userList) {
       this.setState({
         userList: userList,
+        
       });
+    }
+  }
+
+  updateUsersData = (usersData) => {
+    console.log('user data from server/socket: ', usersData);
+    if(usersData){
+      this.setState({
+        usersData: [...this.state.usersData, usersData]
+      })
     }
   }
 
@@ -326,6 +304,7 @@ class InfoPage extends Component {
         avatarFromDb: results.data[0].avatar,
         pathFromDb: results.data[0].image_path
       })
+      socket.emit('new_users_data', this.props.user.userName, this.state.avatarFromDb, this.state.pathFromDb);
     }).catch((error) => {
       console.log('Error getting count', error);
     })
