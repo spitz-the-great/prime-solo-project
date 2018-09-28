@@ -47,11 +47,16 @@ io.on('connection', socket => {
 
   numberOfUsers++;
   console.log(numberOfUsers);
+  
 
   socket.on('change color', (color) => {
     console.log('Color Changed to: ', color)
     io.sockets.emit('change color', color)
   });
+
+  function onConnection(socket){
+    socket.on('drawing', (data) => socket.broadcast.emit('drawing', data));
+  }
 
   socket.on('disconnect', () => {
 
@@ -61,8 +66,13 @@ io.on('connection', socket => {
       connectedUsers.splice(i, 1);
     }
     numberOfUsers--;
+    
+    // function updateUsers(connectedUsers){
+    //   io.sockets.emit('update_connected_users', connectedUsers);
+    // }
+    // console.log('connected users: ', connectedUsers, 'number of users: ', numberOfUsers);
+    // setTimeout(updateUsers(connectedUsers), 100);
 
-    console.log('connected users: ', connectedUsers, 'number of users: ', numberOfUsers);
     io.sockets.emit('update_connected_users', connectedUsers);
   }); // end disconnect
 

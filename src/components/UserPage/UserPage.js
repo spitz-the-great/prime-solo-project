@@ -87,13 +87,13 @@ class UserPage extends Component {
           <h1
             id="welcome"
           >
-            Welcome, {this.props.user.userName}!
+            Sup, {this.props.user.userName}?!
           </h1>
-          <p>Your ID is: {this.props.user.id}</p>
+          {/* <p>Your ID is: {this.props.user.id}</p> */}
 
           <SimpleDialogDemo history={this.props.history}
           userId={this.props.user.id} enterChatPage={this.enterChatPage} />
-          <ul>Others Online:
+          {/* <ul>Others Online:
             <br />
             
 
@@ -103,7 +103,7 @@ class UserPage extends Component {
             <li>user2
 
            </li>
-          </ul>
+          </ul> */}
 
           <button
             onClick={this.logout}

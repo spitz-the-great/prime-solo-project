@@ -27,7 +27,7 @@ router.get('/profile', (req, res) => {
     }
 });
 
-router.get('/getAvatar', (req, res) => {
+router.get('/getPath', (req, res) => {
     console.log('in get avatar');
     userId = req.user.id;
     if (req.isAuthenticated()) {
