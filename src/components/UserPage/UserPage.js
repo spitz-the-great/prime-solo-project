@@ -5,6 +5,14 @@ import Header from '../Header/Header.js';
 import Nav from '../../components/Nav/Nav';
 import SimpleDialogDemo from './AvatarDialog.js';
 
+// material ui imports
+import Button from '@material-ui/core/Button';
+import Grid from '@material-ui/core/Grid';
+
+// css
+import './User.css';
+
+
 import { USER_ACTIONS } from '../../redux/actions/userActions';
 import { triggerLogout } from '../../redux/actions/loginActions';
 
@@ -30,14 +38,14 @@ const mapStateToProps = state => ({
 });
 
 const avatarList = [
-  {name: 'hoverCat', imgPath: '../../../public/bullet_cat.jpg' }
+  { name: 'hoverCat', imgPath: '../../../public/bullet_cat.jpg' }
 ];
 
 class UserPage extends Component {
 
-  constructor(props){
+  constructor(props) {
     super(props)
-    
+
     this.state = {
       selectedAvatar: {
         name: '',
@@ -47,8 +55,8 @@ class UserPage extends Component {
 
     this.enterChatPage = this.enterChatPage.bind(this);
   }
- 
-    
+
+
   componentDidMount() {
     this.props.dispatch({ type: USER_ACTIONS.FETCH_USER });
   }
@@ -68,56 +76,47 @@ class UserPage extends Component {
   }
 
   render() {
-  //   handleDialogClose = () => {
-  //     this.props.onClose(this.props.selectedValue);
-  //   };
-  
-  //   handleDialogItemClick = value => {
-  //     this.props.onClose(value);
-  //   };
-  // }
-    
-    let content = null;
 
-    let dummyUsers = ["user1", "user2"];
+    let content = null;
 
     if (this.props.user.userName) {
       content = (
         <div>
-          <h1
+          <h2
             id="welcome"
+            className="welcomeUsers"
           >
             Sup, {this.props.user.userName}?!
-          </h1>
-          {/* <p>Your ID is: {this.props.user.id}</p> */}
+          </h2>
+          <h3 className="welcomeUsers">
+            See if there are any other cool cats around.</h3>
+          <h3 className="welcomeUsers"> Go on and hit that button.</h3>
 
-          <SimpleDialogDemo history={this.props.history}
-          userId={this.props.user.id} enterChatPage={this.enterChatPage} />
-          {/* <ul>Others Online:
-            <br />
-            
+          <Grid
+            container
+            direction="row"
+            justify="center"
+            alignItems="center"
+          >
+            <SimpleDialogDemo id="dialogButton" history={this.props.history}
+              userId={this.props.user.id} enterChatPage={this.enterChatPage} />
+          </Grid>
 
-            <li>user1
- 
-            </li>
-            <li>user2
-
-           </li>
-          </ul> */}
-
-          <button
+          
+          {/* <Button
+            variant="outlined"
             onClick={this.logout}
           >
             Log Out
-          </button>
+          </Button> */}
         </div>
       );
     }
 
     return (
       <div>
-        <Header title="Multiplayer Chat App" />
-        <Nav history={this.props.history}/>
+        <Header title="Chat Cats" />
+        <Nav history={this.props.history} />
         {content}
       </div>
     );

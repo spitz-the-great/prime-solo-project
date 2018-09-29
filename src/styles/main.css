@@ -52,6 +52,10 @@ input[type="submit"] {
   background-color: black;
   width: 100%;
   border-radius: 0px;
+  text-align: center;
+  position: center;
+  display: table;
+  list-style: none;
   /* position: absolute; */
 }
 
@@ -60,12 +64,15 @@ ul {
     margin: 0;
     padding: 0;
     overflow: hidden;
+    display: table-row;
+
 }
 
 li {
-    float: left;
+    /* float: left; */
+    display: table-cell;
 }
-
+/* nav display: table, the ul display:table-row and the li display:table-cell */
 li a {
     display: block;
     color: white;
@@ -98,4 +105,11 @@ li a:hover {
 /* app name header */
 .lead{
     position: center;
+    text-align: center;
+}
+
+.dialogButton{
+position: center;
+font-family: 'Press Start 2P', cursive;
+
 }

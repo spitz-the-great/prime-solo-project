@@ -19,10 +19,13 @@ import Typography from '@material-ui/core/Typography';
 import blue from '@material-ui/core/colors/blue';
 import classNames from 'classnames';
 
+import TextField from '@material-ui/core/TextField';
+
+import Grid from '@material-ui/core/Grid';
+
+import './User.css';
 // import cat from '../../avatarImages/bullet_cat.jpg';
 // import nyan from '../../avatarImages/nyan.png';
-
-const emails = ['username@gmail.com', 'user02@gmail.com'];
 
 const avatarList = [
     { name: 'Hover Cat', imgPath: 'avatars/bullet_cat.jpg' },
@@ -56,7 +59,7 @@ class SimpleDialog extends React.Component {
 
         return (
             <Dialog onClose={this.handleClose} aria-labelledby="simple-dialog-title" {...other}>
-                <DialogTitle id="simple-dialog-title">Select Your Hero!</DialogTitle>
+                <DialogTitle id="simple-dialog-title">Select Your Chat Cat!</DialogTitle>
                 <div>
                     <List>
                         {avatarList.map((avatar, i) => (
@@ -85,10 +88,6 @@ SimpleDialog.propTypes = {
 const SimpleDialogWrapped = withStyles(styles)(SimpleDialog);
 
 class SimpleDialogDemo extends React.Component {
-
-    // const mapStateToProps = state =>({
-    //     userAvatar: state.avatarReducer
-    // });
 
     constructor(props){
         super(props)
@@ -134,17 +133,22 @@ class SimpleDialogDemo extends React.Component {
     render() {
     
         return (
-            <div>
+            <div className="dialogButton" >
                 <br />
-                <Button onClick={this.handleClickOpen}>Enter Main Chat</Button>
-                <SimpleDialogWrapped
+                <Button 
+                id="dialogButton"
+                className="dialogButton"
+                variant="outlined"
+                onClick={this.handleClickOpen}
+                
+                >Enter Main Chat</Button>
+                <SimpleDialogWrapped  className="dialogButton"
                     // push={this.enterChatPage}
                     history={this.props.history}
                     selectedValue={this.state.selectedValue}
                     open={this.state.open}
                     onClose={this.handleClose}
                 />
-                <Typography variant="subheading">Selected Hero: {this.state.selectedValue}</Typography>
             </div>
         );
     }

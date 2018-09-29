@@ -1,0 +1,36 @@
+.h2{
+    position: center;
+    text-align: center;
+}
+
+#profileButtons{
+    font-family: 'Press Start 2P', cursive;
+    margin: 10px;
+    padding: 10px;
+}
+
+#searchForm{
+    padding-top: 40px;
+    position: center;
+    top: 50%;
+    left: 25%;
+}
+
+#privacy{
+    text-align: center;
+    margin: 10px;
+    padding: 10px;
+    line-height: 40px;
+}
+
+#wisdom{
+    line-height: 30px;
+    text-align: center;
+}
+
+.delete{
+    position: center;
+    text-align: center;
+    top: 50%;
+    left: 25%;
+}
