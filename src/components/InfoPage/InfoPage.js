@@ -177,6 +177,10 @@ class InfoPage extends Component {
     socket.on('typing_status_clear', () => {
       this.updateTypingStatus('');
     })
+
+    socket.on('update_current_data', (usersDataList) =>{
+      this.updateCurrentData(usersDataList);
+    })
     ////// end socket events
 
   } // end constructor
@@ -203,7 +207,7 @@ class InfoPage extends Component {
     socket.emit('new user', this.props.user.userName);
 
     // const canvas = this.refs.testCanvas;
-
+    socket.emit('get_current_users_data');
   } // end didMount
 
   componentDidUpdate() {
@@ -264,7 +268,17 @@ class InfoPage extends Component {
     console.log('user data from server/socket: ', usersData);
     if(usersData){
       this.setState({
-        usersData: [...this.state.usersData, usersData]
+        // usersData: [...this.state.usersData, usersData]
+        usersData: usersData
+      })
+    }
+  }
+
+  updateCurrentData = (usersDataList) =>{
+    console.log('usersDataList from server/socket: ', usersDataList);
+    if(usersDataList){
+      this.setState({
+        usersData: usersDataList
       })
     }
   }
@@ -315,6 +329,7 @@ class InfoPage extends Component {
     let avatar = this.state.avatarFromDb;
 
     let path = this.state.pathFromDb;
+   
 
     console.log(this.state);
     

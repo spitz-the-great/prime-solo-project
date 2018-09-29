@@ -42,6 +42,8 @@ let numberOfUsers = 0;
 
 let connectedUsers = [];
 
+let usersDataList = [{}];
+
 io.on('connection', socket => {
   console.log('User connected');
 
@@ -112,7 +114,10 @@ io.on('connection', socket => {
       avatar,
       path,
     }
-     io.sockets.emit('update_users_data', usersData)
+
+    usersDataList = [...usersDataList, usersData];
+     io.sockets.emit('update_users_data', usersDataList)
+     console.log('new users data call, update_users data: ', usersDataList)
   });
 
   socket.on('is_typing', (username) => {
@@ -120,6 +125,10 @@ io.on('connection', socket => {
     io.sockets.emit('update_typing_status', username);
   })
 
+  socket.on('get_current_users_data', () =>{
+    console.log('current user data: ', usersDataList)
+    io.sockets.emit('update_current_data', usersDataList);
+  })
 
 })
 
