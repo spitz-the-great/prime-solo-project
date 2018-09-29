@@ -17,7 +17,7 @@ import './InfoPage.css';
 
 // socket.io
 import socketIOClient from 'socket.io-client';
-const socket = socketIOClient('10.100.100.127:5000', { transports: ['websocket'] });
+const socket = socketIOClient('192.168.1.5:5000', { transports: ['websocket'] });
 // http://localhost:5000
 // 10.100.100.198:5000
 
@@ -91,7 +91,7 @@ class InfoPage extends Component {
       typingUser: '',
       avatar: '',
       avatarPath: '',
-      avatarFromDb:'',
+      avatarFromDb: '',
       pathFromDb: '',
 
       usersData: [{
@@ -99,8 +99,8 @@ class InfoPage extends Component {
         avatar: '',
         path: '',
       }]
-    
-      
+
+
 
       // canvasRef: React.createRef(),
 
@@ -163,10 +163,10 @@ class InfoPage extends Component {
 
     socket.on('update_connected_users', (userList) => {
       this.updateUserList(userList.connectedUsers);
-  
+
     })
 
-    socket.on('update_users_data', (usersData) =>{
+    socket.on('update_users_data', (usersData) => {
       this.updateUsersData(usersData);
     })
 
@@ -178,7 +178,7 @@ class InfoPage extends Component {
       this.updateTypingStatus('');
     })
 
-    socket.on('update_current_data', (usersDataList) =>{
+    socket.on('update_current_data', (usersDataList) => {
       this.updateCurrentData(usersDataList);
     })
     ////// end socket events
@@ -196,12 +196,12 @@ class InfoPage extends Component {
   componentDidMount() {
     this.props.dispatch({ type: USER_ACTIONS.FETCH_USER });
     socketIOClient({ transports: ['websocket'] });
-    socketIOClient.connect('10.100.100.127:3000', { transports: ['websocket'] });
+    socketIOClient.connect('192.168.1.5:3000', { transports: ['websocket'] });
     //192.168.1.5
     // http://localhost:3000
     // 10.100.100.198:3000
     this.getAvatarPath();
-   
+
     // socket.emit('new user', this.props.user.userName);
 
     socket.emit('new user', this.props.user.userName);
@@ -259,14 +259,15 @@ class InfoPage extends Component {
     if (userList) {
       this.setState({
         userList: userList,
-        
+        // userList: [...this.state.userList, userList]
+
       });
     }
   }
 
   updateUsersData = (usersData) => {
     console.log('user data from server/socket: ', usersData);
-    if(usersData){
+    if (usersData) {
       this.setState({
         // usersData: [...this.state.usersData, usersData]
         usersData: usersData
@@ -274,9 +275,18 @@ class InfoPage extends Component {
     }
   }
 
-  updateCurrentData = (usersDataList) =>{
+  updateCurrentData = (usersDataList) => {
     console.log('usersDataList from server/socket: ', usersDataList);
-    if(usersDataList){
+    if (usersDataList) {
+      this.setState({
+        usersData: usersDataList
+      })
+    }
+  }
+
+  addSocketId = (usersDataList) => {
+    console.log('usersDataList from server: ', usersDataList);
+    if (usersDataList) {
       this.setState({
         usersData: usersDataList
       })
@@ -329,10 +339,10 @@ class InfoPage extends Component {
     let avatar = this.state.avatarFromDb;
 
     let path = this.state.pathFromDb;
-   
+
 
     console.log(this.state);
-    
+
 
     if (this.props.user.userName) {
       content = (
@@ -351,12 +361,30 @@ class InfoPage extends Component {
           {/* <ChatAvatars avatar={avatar} path={path}/> */}
 
           {/* conditional render more <ChatAvatars/> based on length of this.state.userList */}
-          <div>
-          {this.state.usersData.map((user, i) => {
-            return(
-            <ChatAvatars avatar={user.avatar} path={user.path}/>
-          )})
-          }</div>
+          <Grid
+              container
+              direction="row"
+              justify="flex-start"
+              alignItems="center"
+            >
+          <div className="avContainer">
+            <Grid
+              container
+              direction="row"
+              justify="flex-start"
+              alignItems="center"
+            >
+              {this.state.usersData.map((user, i) => {
+
+                return (
+                  <ChatAvatars className="avs" avatar={user.avatar} path={user.path} />
+                )
+              })
+              }
+            </Grid>
+          </div>
+
+
           <Grid
             // className="content"
             container
@@ -410,6 +438,7 @@ class InfoPage extends Component {
               </div>
             </div>
             {/* end chatContainer div */}
+          </Grid>
           </Grid>
           <br />
           <br />

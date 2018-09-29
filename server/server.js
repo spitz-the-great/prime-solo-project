@@ -42,12 +42,15 @@ let numberOfUsers = 0;
 
 let connectedUsers = [];
 
-let usersDataList = [{}];
+let usersDataList = [];
 
 io.on('connection', socket => {
-  console.log('User connected');
+  console.log('User connected: ', socket.userName, socket.id);
+  let ID = socket.id
+  socket.broadcast.to(ID).emit('add_socket_id', ID);
 
   numberOfUsers++;
+
   console.log(numberOfUsers);
   
 
@@ -63,11 +66,23 @@ io.on('connection', socket => {
   socket.on('disconnect', () => {
 
     console.log('user disconnected: ', socket.userName)
-    let i = connectedUsers.indexOf(socket.userName);
-    if (i != -1) {
-      connectedUsers.splice(i, 1);
+
+    // for ( let i = 0; i < usersDataList.length; i++){
+    //   if(socket.userName === usersDataList[i].name){
+    //     usersDataList.splice(usersDataList[i], 1)
+    //   }
+    // }
+    // io.sockets.emit('update_current_data', usersDataList);
+
+    let x = connectedUsers.indexOf(socket.userName);
+    if (x != -1) {
+      connectedUsers.splice(x, 1);
+      numberOfUsers--;
     }
-    numberOfUsers--;
+    
+    
+
+  
     
     // function updateUsers(connectedUsers){
     //   io.sockets.emit('update_connected_users', connectedUsers);
