@@ -157,11 +157,11 @@ class ProfilePage extends Component {
                             <div id="privacy">{this.props.profile[0].privacy_setting &&
                                 <p id="privacy">Current privacy setting: <br></br><div></div> {this.props.profile[0].privacy_setting}</p>
                             }</div>
-                            <br />
-                            <Button id="profileButtons"
+                            
+                            <Button id="profileButtons" className="setButtons"
                                 variant="outlined" onClick={this.setPrivate}>Set To Private</Button>
 
-                            <Button id="profileButtons"
+                            <Button id="profileButtons" className="setButtons"
                                 variant="outlined" onClick={this.setPublic}>Set To Public</Button>
                             <br /><br />
 
@@ -176,7 +176,7 @@ class ProfilePage extends Component {
 
                                 <TextField
                                     id="chatInput"
-                                    className="delete"
+                                    className="searchButton"
                                     variant="outlined"
                                     label="Enter a user name"
                                     onChange={this.handleChange}
@@ -185,7 +185,7 @@ class ProfilePage extends Component {
                                 </TextField>
 
                                 <Button id="profileButtons"
-                                className="delete"
+                                className="searchButton"
                                     variant="outlined" type="submit" >Search Users</Button>
 
                                 <br />

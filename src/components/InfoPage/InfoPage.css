@@ -103,6 +103,7 @@
 .chats{
     text-align: left;
     font-family: 'Roboto';
+    font-size: 115%;
 }
 .typingUser{
     /* position: fixed; */
