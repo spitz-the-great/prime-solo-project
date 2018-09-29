@@ -355,9 +355,17 @@ class InfoPage extends Component {
             width="200" height="100">
           </canvas> */}
 
-          <p>
-            Chat Page {avatar}
-          </p>
+          <h2 className="h2">
+            Chat Page 
+          </h2>
+
+           <div className="typingUser">
+                {this.state.typingUser &&
+                  <p>{this.state.typingUser}, is typing...</p>}
+              </div>
+
+              <br></br>
+            <br></br>
           {/* <ChatAvatars avatar={avatar} path={path}/> */}
 
           {/* conditional render more <ChatAvatars/> based on length of this.state.userList */}
@@ -367,6 +375,8 @@ class InfoPage extends Component {
               justify="flex-start"
               alignItems="center"
             >
+            <br></br>
+            <br></br>
           <div className="avContainer">
             <Grid
               container
@@ -394,10 +404,7 @@ class InfoPage extends Component {
           >
             <div className="chatContainer">
               <h4 className="right">Connected users:</h4>
-              <div className="typingUser">
-                {this.state.typingUser &&
-                  <p>{this.state.typingUser}, is typing...</p>}
-              </div>
+             
 
               {/* {JSON.stringify(this.state.userList)} */}
 
@@ -410,8 +417,13 @@ class InfoPage extends Component {
                   )
                 })}
               </div>
-              <br />
+              
               <br></br>
+               {/* <div className="typingUser">
+                {this.state.typingUser &&
+                  <p>{this.state.typingUser}, is typing...</p>}
+              </div> */}
+              
 
               <h4>General Chat:</h4>
               <div>
@@ -443,10 +455,11 @@ class InfoPage extends Component {
           <br />
           <br />
 
-          <div style={{ textAlign: "left" }}>
-            <button onClick={() => this.send()}>Change Color</button>
-            <button id="red" onClick={() => this.setColor('red')}>Red</button>
-            <button id="blue" onClick={() => this.setColor('blue')}>Blue</button>
+          <div style={{ textAlign: "center" }}>
+          
+            <Button variant="outlined" className="colors" onClick={() => this.send()}>Change Color</Button>
+            <Button variant="outlined" className="colors" id="red" onClick={() => this.setColor('red')}>Red</Button>
+            <Button variant="outlined" className="colors" id="blue" onClick={() => this.setColor('skyblue')}>Sky Blue</Button>
           </div>
 
         </div>

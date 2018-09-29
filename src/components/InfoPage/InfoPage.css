@@ -26,6 +26,10 @@
     margin: 30px;
     padding: 30px;
 }
+.h2{
+    position: center;
+    text-align: center;
+}
 
 .avContainer{
     width: 85%;
@@ -101,8 +105,17 @@
     font-family: 'Roboto';
 }
 .typingUser{
-    position: fixed;
-    text-align: left;
+    /* position: fixed; */
+    height: 15px;
+    position: center fixed;
+    text-align: center;
+}
+
+.colors{
+    font-family: 'Press Start 2P', cursive;
+    padding: 20px;
+    margin: 20px;
+    border: 20px;
 }
 
 
