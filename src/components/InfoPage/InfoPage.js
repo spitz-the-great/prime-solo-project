@@ -25,8 +25,9 @@ const mapStateToProps = state => ({
   user: state.user,
 });
 const avatarList = [
-  { name: 'hoverCat', imgPath: 'avatars/bullet_cat.jpg' },
-  { name: 'nyanCat', imgPath: 'avatars/nyan.png' },
+  { name: 'hoverCat', imgPath: 'avatars/hover_cat.png' },
+  { name: 'nyanCat', imgPath: 'avatars/nyan_cat.png' },
+  { name: ''}
 ]
 
 // let canvas = document.getElementById('testCanvas');

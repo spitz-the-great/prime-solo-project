@@ -28,8 +28,15 @@ import './User.css';
 // import nyan from '../../avatarImages/nyan.png';
 
 const avatarList = [
-    { name: 'Hover Cat', imgPath: 'avatars/bullet_cat.jpg' },
-    { name: 'Nyan Cat', imgPath: 'avatars/nyan.png' },
+    { name: 'Hover Cat', imgPath: 'avatars/hover_cat.png' },
+    { name: 'Nyan Cat', imgPath: 'avatars/nyan_cat.png' },
+    { name: 'Grumpy Cat', imgPath: 'avatars/grumpy_cat.png' },
+    { name: 'Heavy Breathing Cat', imgPath: 'avatars/heavy_cat.png' },
+    { name: 'Maru Cat', imgPath: 'avatars/maru_cat.png' },
+    { name: 'Putin Cat', imgPath: 'avatars/putin_cat.png' },
+    { name: 'Snoopy Cat', imgPath: 'avatars/snoopy_cat.png' },
+    { name: 'Soon Cat', imgPath: 'avatars/soon_cat.png' }
+    
 ]
 
 const styles = {
