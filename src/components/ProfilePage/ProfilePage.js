@@ -80,9 +80,11 @@ class ProfilePage extends Component {
     // click handler for "delete user" button
     deleteUser = () => {
 
-        const response = window.confirm(`This will delete your user name, password, your friends. 
-        It's game over, man. Ya done. Finito. 
-        Do you want to delete all the things?`); if (response == true) {
+        const response = window.confirm(`This will delete your user name, password, and your friends. 
+        No more cats for you. Colors get set back to white. 
+        It's game over, man. Ya done. Finito.
+        
+        Is this what you truly desire?`); if (response == true) {
 
             console.log('in delete user, user: ', this.props.user.id);
             let id = this.props.user.id;

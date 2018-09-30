@@ -468,6 +468,7 @@ class InfoPage extends Component {
             <Button variant="outlined" className="colors" id="red" onClick={() => this.setColor('red')}>Red</Button>
             <Button variant="outlined" className="colors" id="blue" onClick={() => this.setColor('skyblue')}>Sky Blue</Button>
             <Button variant="outlined" className="colors" id="yellow" onClick={() => this.setColor('yellow')}>Yellow</Button>
+            <Button variant="outlined" className="colors" id="deepPink" onClick={() => this.setColor('deeppink')}>Deep Pink</Button>
 
           </div>
 
