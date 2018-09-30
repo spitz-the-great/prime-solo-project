@@ -437,12 +437,12 @@ class InfoPage extends Component {
                   <TextField
                     id="chatInput"
                     variant="outlined"
-                    label="chat it up"
+                    label="mew it up!"
                     onChange={this.changeHandler}
                     value={this.state.newMessage}
                     type="text" name="newMessage">
                   </TextField>
-                  <Button id="submitButton" type="submit" variant="outlined">Submit</Button>
+                  <Button id="submitButton" type="submit" variant="outlined">Meow</Button>
                 </form>
                 <div className="chatLog">
                   {this.state.messagesList.map((message, i) => {
@@ -467,6 +467,8 @@ class InfoPage extends Component {
             <Button variant="outlined" className="colors" onClick={() => this.send()}>Change Color</Button>
             <Button variant="outlined" className="colors" id="red" onClick={() => this.setColor('red')}>Red</Button>
             <Button variant="outlined" className="colors" id="blue" onClick={() => this.setColor('skyblue')}>Sky Blue</Button>
+            <Button variant="outlined" className="colors" id="yellow" onClick={() => this.setColor('yellow')}>Yellow</Button>
+
           </div>
 
         </div>
