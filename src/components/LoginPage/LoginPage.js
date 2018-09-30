@@ -136,6 +136,7 @@ render() {
       {/* {/* this div wraps the entire form and is the 
         only direct child div of the container before it closes below */}
       <div className="content">
+      <h1 id="title" >Chat Cats</h1>
         <form onSubmit={this.login}
         //  className={classes.container}
         >

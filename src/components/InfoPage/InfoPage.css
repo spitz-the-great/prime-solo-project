@@ -119,4 +119,15 @@
     border: 20px;
 }
 
+.avGallery{
+        vertical-align: top;
+        
+        text-align: center;
+       
+}
+
+.userName{
+        display: block;
+    }
+
 

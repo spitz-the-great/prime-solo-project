@@ -30,10 +30,11 @@ class ChatAvatars extends React.Component {
         return (
             <div className={classes.row}>
 
-                <Avatar
+                <Avatar 
                     src={this.props.path}
-                    className={classNames(classes.avatar, classes.bigAvatar)}
-                />
+                    className={classNames(classes.avatar, classes.bigAvatar)}>
+                    {/* <p>{this.props.username}</p> */}
+                    </Avatar>
             </div>
         );
     }

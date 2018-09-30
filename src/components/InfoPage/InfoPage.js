@@ -384,10 +384,14 @@ class InfoPage extends Component {
               justify="flex-start"
               alignItems="center"
             >
+          
               {this.state.usersData.map((user, i) => {
 
                 return (
-                  <ChatAvatars className="avs" avatar={user.avatar} path={user.path} />
+                  <div className="avGallery" key={i}>
+                  <ChatAvatars className="avs" name={user.username} avatar={user.avatar} path={user.path} />
+                  <span className="userName">{user.username}</span>
+                  </div>
                 )
               })
               }
@@ -443,6 +447,7 @@ class InfoPage extends Component {
                     return (
                       <ul className="chats" key={i}>
                         <li className="chats" >{message.user}: {message.message}</li>
+                        <br></br>
                       </ul>
                     )
                   })}
