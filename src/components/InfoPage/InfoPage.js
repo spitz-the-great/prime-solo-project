@@ -418,6 +418,7 @@ class InfoPage extends Component {
                   return (
                     <ul id="connectedUsers" key={i}>
                       <li >{user}</li>
+                      <br></br>
                     </ul>
                   )
                 })}
@@ -474,7 +475,7 @@ class InfoPage extends Component {
 
     return (
       <div>
-        <Nav id="content" />
+        <Nav history={this.props.history} id="content" />
         {/* <canvas ref="testCanvas"
             className="test"
             width="200" height="100">
