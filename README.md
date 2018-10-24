@@ -1,4 +1,4 @@
-#Chat Cats
+# Chat Cats
 This is a CRUD application that also has a real-time chat feature utilizing websockets. A user can create an account, update privacy settings, search for other users by name and chat with anyone else logged into the app at the same time.
 
 ## Prerequisites
@@ -36,6 +36,6 @@ If you would like to name your database something else, you will need to change 
 * `public/` contains static assets for the client-side
 * `server/` contains the Express App
 
-##Screen Shots
+## Screen Shots
 
-![Screen Shot](public/Landing Page.png)
+![Screen Shot](public/LandingPage.png)
