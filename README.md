@@ -22,7 +22,7 @@ If you would like to name your database something else, you will need to change 
     ```
     SERVER_SESSION_SECRET=secretLongString
     ```
-    While you're in your new `.env` file, take the time to replace `secretLongString` with some long random string like `25POUbVtx6RKVNWszd9ERB9Bb6` to keep your application secure. Here's a site that can help you: [https://passwordsgenerator.net/](https://passwordsgenerator.net/). If you don't do this step, create a secret with less than eight characters, or leave it as `superDuperSecret`, you will get a warning.
+    While you're in your new `.env` file, take the time to replace `secretLongString` with some long random string like `25POUbVtx6RKVNWszd9ERB9Bb6` to keep your application secure. Here's a site that can help you: [https://passwordsgenerator.net/](https://passwordsgenerator.net/). If you don't do this step, create a secret with less than eight characters, or leave it as `secretLongString`, you will get a warning.
 
 * Start postgres if not running already by using `brew services start postgresql`
 * Run `npm run server`
@@ -38,4 +38,15 @@ If you would like to name your database something else, you will need to change 
 
 ## Screen Shots
 
+Landing Page
 ![Screen Shot](public/LandingPage.png)
+
+Edit Profile Page
+![Screen Shot](public/EditProfilePage.png)
+
+Avatar Select Page with modal popup
+![Screen Shot](public/AvatarSelect.png)
+
+Chat Page
+![Screen Shot](public/ChatPage.png)
+
