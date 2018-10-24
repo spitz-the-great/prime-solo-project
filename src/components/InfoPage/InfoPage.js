@@ -17,7 +17,7 @@ import './InfoPage.css';
 
 // socket.io
 import socketIOClient from 'socket.io-client';
-const socket = socketIOClient('192.168.1.5:5000', { transports: ['websocket'] });
+const socket = socketIOClient('10.100.100.109:5000', { transports: ['websocket'] });
 // http://localhost:5000
 // 10.100.100.198:5000
 
@@ -197,7 +197,7 @@ class InfoPage extends Component {
   componentDidMount() {
     this.props.dispatch({ type: USER_ACTIONS.FETCH_USER });
     socketIOClient({ transports: ['websocket'] });
-    socketIOClient.connect('192.168.1.5:3000', { transports: ['websocket'] });
+    socketIOClient.connect('10.100.100.109:3000', { transports: ['websocket'] });
     //192.168.1.5
     // http://localhost:3000
     // 10.100.100.198:3000
